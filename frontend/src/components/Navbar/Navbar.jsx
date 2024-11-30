@@ -5,7 +5,9 @@ import  {fassets}  from "../../frontend_assets/assets";
 import {Link} from "react-router-dom";
 
 
-const Navbar = () => {
+const Navbar = (props) => {
+    const {showLogin, setShowLogin} = props;
+    
  
     const [menu, setMenu] = useState("home");
     const reloadPage = () => {
@@ -26,10 +28,10 @@ const Navbar = () => {
                 <div className="navbar-right">
                     <img src={fassets.search_icon} alt="" />
                     <div className="navbar-search-icon">
-                        <img src={fassets.basket_icon} alt="" />
+                       <Link to="/cart"><img src={fassets.basket_icon} alt="" /></Link> 
                         <div className="dot"></div>
                     </div>
-                    <button>Sign Up</button>
+                    <button onClick={()=>{setShowLogin(true)}}>Sign Up</button>
                 </div>
             </div>
         </>
