@@ -10,7 +10,7 @@ const Cart = () => {
         <>
             <div className="cart">
                 <div className="cart-items">
-                    <div className="cart-item-items-title">
+                    <div className="cart-items-title">
                         <p>Items</p>
                         <p>Title</p>
                         <p>Price</p>
@@ -29,9 +29,10 @@ const Cart = () => {
                                     <p>{item.name}</p>
                                     <p>{item.price.newPrice}</p>
                                     <p>{cartItem[item.id]}</p>
-                                    <p></p>
-                                    <p></p>
+                                    <p>{item.price.newPrice * cartItem[item.id]}</p>
+                                    <p onClick={()=>{removeFromCart(item.id)}} className="cross-icon">X</p>
                                   </div>
+                                  <hr />
                                 </>
                             )
 

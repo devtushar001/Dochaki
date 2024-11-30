@@ -1,0 +1,33 @@
+.cart {
+    position: relative;
+    top: 130px;
+    bottom: 50px;
+}
+
+.cart-items-title {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr 0.5fr;
+    font-size: max(1vw, 12px);
+}
+
+.cart-items-item {
+    margin: 10px 0px;
+    color: black;
+    vertical-align: center;
+}
+
+.cart-items-item img {
+    width: 150px;
+}
+
+.cart-items-item .cross-icon {
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.cart hr {
+    height: 1px;
+    background-color: #e2e2e2;
+    border: none;
+}
