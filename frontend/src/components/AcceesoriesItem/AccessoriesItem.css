@@ -1,0 +1,106 @@
+.accessory-item {
+    width: 100%;
+    margin: auto;
+    border-radius: 15px;
+    box-shadow: 0px 0px 10px #00000015;
+    overflow: hidden;
+    transition: 0.3s;
+    animation: fadeIn 1s;
+    cursor: pointer;
+}
+
+.accessory-item:hover {
+   transform: translateY(-10px)
+}
+
+.accessory-item-image {
+    width: 100%;
+    border-radius: 15px 15px 0px 0px;
+}
+
+.accesory-item-info {
+    padding: 20px;
+}
+
+.accessory-item-ratings {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.first {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.accessory-item-price {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.prices {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.accessory-item-new-price {
+    text-decoration: line-through;
+}
+
+.accessory-item-old-price {
+    font-size: 18px;
+    color: rgb(0, 97, 247);
+}
+
+.accessory-item-name-rating {
+    margin-bottom: 12px;
+}
+
+.view-more {
+    padding: 12px;
+    width: 100%;
+    background-color: rgb(0, 0, 0);
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.7s;
+}
+
+/* .view-more:hover {
+    opacity: 0.8;
+    transform: scale(1.07);
+} */
+
+.accessories-item-img-container {
+    position: relative;
+}
+
+.accessories-item-img-container .add {
+    width: 35px;
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    border-radius: 50%;
+}
+
+.accessory-item-counter {
+    width: 100px;
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px;
+    border-radius: 50px;
+    background-color: #fff;
+}
+
+.accessory-item-counter img{
+   width: 30px;
+}
