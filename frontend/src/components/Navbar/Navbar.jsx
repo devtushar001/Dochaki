@@ -1,19 +1,19 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import './Navbar.css';
 import { assets } from "../../assets/assets";
 import  {fassets}  from "../../frontend_assets/assets";
 import {Link} from "react-router-dom";
+import { DochakiContext } from "../Context/Contact";
 
 
 const Navbar = (props) => {
     const {showLogin, setShowLogin} = props;
-    
- 
     const [menu, setMenu] = useState("home");
     const reloadPage = () => {
         window.location.reload()
         window.location.href = '/';
     }
+    const {getTotalCartAmount, cartItem} = useContext(DochakiContext);
 
     return (
         <>
@@ -29,7 +29,7 @@ const Navbar = (props) => {
                     <img src={fassets.search_icon} alt="" />
                     <div className="navbar-search-icon">
                        <Link to="/cart"><img src={fassets.basket_icon} alt="" /></Link> 
-                        <div className="dot"></div>
+                        <div className={getTotalCartAmount() === 0 ? "" : "dot"}></div>
                     </div>
                     <button onClick={()=>{setShowLogin(true)}}>Sign Up</button>
                 </div>

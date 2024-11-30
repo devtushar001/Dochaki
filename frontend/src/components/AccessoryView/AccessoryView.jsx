@@ -18,7 +18,7 @@ const AccessoryView = (props) => {
         }, 500); // Time should match with animation duration
         return () => clearTimeout(timer);
     }, [mainImage]);
-    
+
     return (
         <>
             <div className="accessory-view">
@@ -41,10 +41,10 @@ const AccessoryView = (props) => {
                     </div>
                     <div className="accessory-view-right-prices">
                         <div className="accessory-view-right-price-old">
-                            ${price.oldPrice}
+                            &#8377;{price.oldPrice}
                         </div>
                         <div className="accessory-view-right-price-new">
-                            ${price.newPrice}
+                            &#8377;{price.newPrice}
                         </div>
                     </div>
                     <div className="accessory-view-right-description">
