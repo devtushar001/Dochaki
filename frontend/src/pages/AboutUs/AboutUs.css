@@ -1,0 +1,68 @@
+/* AboutUs.css */
+
+.about-us-container {
+    margin-top: 140px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: #f8f9fa;
+  }
+  
+  .about-us-content {
+    max-width: 800px;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .about-us-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .about-us-description {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    text-align: justify;
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .about-us-title {
+      font-size: 2rem;
+    }
+  
+    .about-us-description {
+      font-size: 0.9rem;
+    }
+  
+    .about-us-content {
+      padding: 15px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .about-us-title {
+      font-size: 1.5rem;
+    }
+  
+    .about-us-description {
+      font-size: 0.8rem;
+    }
+  
+    .about-us-container {
+      padding: 10px;
+    }
+  
+    .about-us-content {
+      padding: 10px;
+    }
+  }
+  
