@@ -47,20 +47,15 @@ const Cart = () => {
                         </div>
                         <hr />
                         <div className="cart-total-details">
-                            <p>Delievery Fee</p>
-                            <p>&#8377;{getTotalCartAmount() * 0.1}</p>
-                        </div>
-                        <hr />
-                        <div className="cart-total-details">
-                            <p>Tax</p>
-                            <p>&#8377;{getTotalCartAmount() * 0.05}</p>
+                            <p>Shipping Fee + GST</p>
+                            <p>&#8377;{getTotalCartAmount() * 0.15}</p>
                         </div>
                         <hr />
                         <div className="cart-total-details">
                             <p>Total</p>
-                            <p>&#8377;{getTotalCartAmount() + getTotalCartAmount() * 0.1 + getTotalCartAmount() * 0.05}</p>
+                            <p>&#8377;{getTotalCartAmount() + getTotalCartAmount() * 0.15}</p>
                         </div>
-                        <button onClick={()=> navigate('/order')}>PROCEED TO CHECKOUT</button>
+                        <button onClick={() => navigate('/order')}>PROCEED TO CHECKOUT</button>
                     </div>
                     <div className="cart-promocode">
                         <div>
