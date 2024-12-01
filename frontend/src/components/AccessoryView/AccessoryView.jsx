@@ -6,7 +6,7 @@ import { DochakiContext } from "../Context/Contact";
 
 const AccessoryView = (props) => {
     const { addToCart, removeFromCart, cartItem } = useContext(DochakiContext);
-    const { id, name, category, reviews, reviewCount, price, description, images, additionalInfo } = props;
+    const { _id, name, category, reviews, reviewCount, price, description, images, additionalInfo } = props;
     const [mainImage, setMainImage] = useState(images.mainImage);
     const [animationClass, setAnimationClass] = useState('');
 
@@ -53,8 +53,8 @@ const AccessoryView = (props) => {
                     <div className="accessory-view-right-size">
                         <h1>Details For You</h1>
                         <div className="accessory-view-right-sizes">
-                            <div>Quantity : {!cartItem[id] ? 0 : cartItem[id]}</div>
-                            <div className="chrome" onClick={() => removeFromCart(id)}>Remove From Cart</div>
+                            <div>Quantity : {!cartItem[_id] ? 0 : cartItem[_id]}</div>
+                            <div className="chrome" onClick={() => removeFromCart(_id)}>Remove From Cart</div>
                         </div>
                         <div className="other-details-container">
                             <p className="accessory-view-right-category"> <span>Category : {category}, {name}</span></p>
@@ -65,19 +65,19 @@ const AccessoryView = (props) => {
                     <div className="quantity-container">
                         <div className="accessories-item-img-container">
 
-                            {/* {!cartItem[id] ? <img className="add" onClick={() => addToCart(id)} src={fassets.add_icon_white} alt="" />
+                            {/* {!cartItem[_id] ? <img className="add" onClick={() => addToCart(_id)} src={fassets.add_icon_white} alt="" />
                                 : <div className="accessory-item-counter">
-                                    <img src={fassets.remove_icon_red} onClick={() => removeFromCart(id)} alt="" />
-                                    <p>{cartItem[id]}</p>
-                                    <img className="adds" onClick={() => addToCart(id)} src={fassets.add_icon_green} alt="" />
+                                    <img src={fassets.remove_icon_red} onClick={() => removeFromCart(_id)} alt="" />
+                                    <p>{cartItem[_id]}</p>
+                                    <img className="adds" onClick={() => addToCart(_id)} src={fassets.add_icon_green} alt="" />
                                 </div>
                             } */}
                         </div>
 
                     </div>
                     <div className="buttons">
-                        <Link to={'/cart'}><button className="buy-now" onClick={() => { cartItem[id] === undefined || !cartItem[id] == NaN ? addToCart(id) : console.log(cartItem[id]) }}>BUY NOW</button></Link>
-                        <button className="add-to" onClick={() => { addToCart(id) }} >ADD TO CART</button>
+                        <Link to={'/cart'}><button className="buy-now" onClick={() => { cartItem[_id] === undefined || !cartItem[_id] == NaN ? addToCart(_id) : console.log(cartItem[_id]) }}>BUY NOW</button></Link>
+                        <button className="add-to" onClick={() => { addToCart(_id) }} >ADD TO CART</button>
                     </div>
                 </div>
             </div>

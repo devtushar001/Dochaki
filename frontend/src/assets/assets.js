@@ -77,7 +77,7 @@ export const menu_list = [
 export const bikeAccessories = [
     // Benelli Accessories
     {
-        id: 1,
+        _id: 1,
         name: "Benelli Crash Guard",
         category: "Benelli",
         reviews: 4.3,
@@ -93,7 +93,7 @@ export const bikeAccessories = [
         additionalInfo: { material: "Steel", compatibility: ["Benelli 600i", "Benelli TRK 502"] }
     },
     {
-        id: 2,
+        _id: 2,
         name: "Benelli LED Headlight",
         category: "Benelli",
         reviews: 4.8,
@@ -109,7 +109,7 @@ export const bikeAccessories = [
         additionalInfo: { wattage: "60W", compatibility: ["All Benelli models"] }
     },
     {
-        id: 3,
+        _id: 3,
         name: "Benelli Bike Cover",
         category: "Benelli",
         reviews: 4.9,
@@ -125,7 +125,7 @@ export const bikeAccessories = [
 
     // BMW Accessories
     {
-        id: 4,
+        _id: 4,
         name: "BMW Touring Box",
         category: "BMW",
         reviews: 4.1,
@@ -139,7 +139,7 @@ export const bikeAccessories = [
         additionalInfo: { material: "Aluminum", capacity: "45L", compatibility: ["BMW GS series"] }
     },
     {
-        id: 5,
+        _id: 5,
         name: "BMW Handlebar Risers",
         category: "BMW",
         reviews: 4.7,
@@ -155,7 +155,7 @@ export const bikeAccessories = [
 
     // Harley-Davidson Accessories
     {
-        id: 6,
+        _id: 6,
         name: "Harley Davidson Saddle Bag",
         category: "H-Davidson",
         reviews: 4.7,
@@ -169,7 +169,7 @@ export const bikeAccessories = [
         additionalInfo: { material: "Leather", compatibility: ["All Harley-Davidson models"] }
     },
     {
-        id: 7,
+        _id: 7,
         name: "Harley Davidson Exhaust Shield",
         category: "H-Davidson",
         reviews: 4.6,
@@ -185,7 +185,7 @@ export const bikeAccessories = [
 
     // Hero Accessories
     {
-        id: 8,
+        _id: 8,
         name: "Hero Bike Cover",
         category: "Hero",
         reviews: 4.1,
@@ -198,7 +198,7 @@ export const bikeAccessories = [
         additionalInfo: { material: "Polyester", compatibility: ["Hero Splendor", "Hero Xpulse"] }
     },
     {
-        id: 9,
+        _id: 9,
         name: "Hero Alloy Wheels",
         category: "Hero",
         reviews: 3.5,
@@ -214,7 +214,7 @@ export const bikeAccessories = [
 
     // Honda Accessories
     {
-        id: 10,
+        _id: 10,
         name: "Honda Windshield",
         category: "Honda",
         reviews: 4.2,
@@ -230,7 +230,7 @@ export const bikeAccessories = [
 
     // Kawasaki Accessories
     {
-        id: 11,
+        _id: 11,
         name: "Kawasaki Pannier Kit",
         category: "Kawasaki",
         reviews: 4.3,
@@ -246,7 +246,7 @@ export const bikeAccessories = [
 
     // Keeway Accessories
     {
-        id: 12,
+        _id: 12,
         name: "Keeway LED Indicators",
         category: "Keeway",
         reviews: 2.5,
@@ -262,7 +262,7 @@ export const bikeAccessories = [
 
     // KTM Accessories
     {
-        id: 13,
+        _id: 13,
         name: "KTM Handguards",
         category: "KTM",
         reviews: 1.2,
@@ -278,7 +278,7 @@ export const bikeAccessories = [
 
     // Royal Enfield Accessories
     {
-        id: 14,
+        _id: 14,
         name: "Royal Enfield Exhaust Pipe",
         category: "R-Enfield",
         reviews: 3.2,
@@ -294,7 +294,7 @@ export const bikeAccessories = [
 
     // Triumph Accessories
     {
-        id: 15,
+        _id: 15,
         name: "Triumph Leather Seat",
         category: "Triumph",
         reviews: 3.7,
@@ -310,7 +310,7 @@ export const bikeAccessories = [
 
     // Universal Accessories
     {
-        id: 16,
+        _id: 16,
         name: "Universal Bike Phone Mount",
         category: "Universal",
         reviews: 5,
@@ -324,7 +324,7 @@ export const bikeAccessories = [
         additionalInfo: { material: "Plastic & Rubber", compatibility: ["All motorcycles"] }
     },
     {
-        id: 17,
+        _id: 17,
         name: "Universal LED Tail Light",
         category: "Universal",
         reviews: 4.8,

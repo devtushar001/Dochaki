@@ -21,16 +21,16 @@ const Cart = () => {
                     <br />
                     <hr />
                     {bikeAccessories.map((item, i) => {
-                        if (cartItem[item.id] > 0) {
+                        if (cartItem[item._id] > 0) {
                             return (
                                 <>
                                     <div className="cart-items-title cart-items-item">
-                                        <Link to={`/accessory/${item.id}`}><img src={item.images.mainImage} alt="" /></Link>
+                                        <Link to={`/accessory/${item._id}`}><img src={item.images.mainImage} alt="" /></Link>
                                         <p>{item.name}</p>
                                         <p>&#8377;{item.price.newPrice}</p>
-                                        <p>{cartItem[item.id]}</p>
-                                        <p>&#8377;{item.price.newPrice * cartItem[item.id]}</p>
-                                        <p onClick={() => { removeFromCart(item.id) }} className="cross-icon">X</p>
+                                        <p>{cartItem[item._id]}</p>
+                                        <p>&#8377;{item.price.newPrice * cartItem[item._id]}</p>
+                                        <p onClick={() => { removeFromCart(item._id) }} className="cross-icon">X</p>
                                     </div>
                                     <hr />
                                 </>

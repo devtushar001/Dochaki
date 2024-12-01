@@ -7,17 +7,17 @@ import { DochakiContext } from "../Context/Contact";
 
 const AccessoriesItem = (props) => {
   const {addToCart, removeFromCart, cartItem} = useContext(DochakiContext);
-  const { id, name, price, images, category, reviews, reviewCount } = props;
+  const { _id, name, price, images, category, reviews, reviewCount } = props;
   return (
     <>
       <div className="accessory-item">
         <div className="accessories-item-img-container">
           <img src={images} alt="" className="accessory-item-image" />
-          {!cartItem[id] ? <img className="add" onClick={() => addToCart(id)} src={fassets.add_icon_white} alt="" />
+          {!cartItem[_id] ? <img className="add" onClick={() => addToCart(_id)} src={fassets.add_icon_white} alt="" />
             : <div className="accessory-item-counter">
-              <img src={fassets.remove_icon_red} onClick={() => removeFromCart(id)} alt="" />
-              <p>{cartItem[id]}</p>
-              <img className="adds" onClick={()=> addToCart(id)} src={fassets.add_icon_green} alt="" />
+              <img src={fassets.remove_icon_red} onClick={() => removeFromCart(_id)} alt="" />
+              <p>{cartItem[_id]}</p>
+              <img className="adds" onClick={()=> addToCart(_id)} src={fassets.add_icon_green} alt="" />
             </div>
           }
         </div>
@@ -42,7 +42,7 @@ const AccessoriesItem = (props) => {
 
           <p className="accessory-item-category"><span>Category : </span>{category}</p>
         </div>
-        <Link to={`accessory/${id}`}><button className="view-more">View More..</button></Link>
+        <Link to={`accessory/${_id}`}><button className="view-more">View More..</button></Link>
       </div>
     </>
   )

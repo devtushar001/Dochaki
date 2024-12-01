@@ -12,12 +12,12 @@ const Accessory = () => {
         <>
             <div className="accessory-full-view">
                 {bikeAccessories.map((item, i) => {
-                    if (Number(id) === item.id) {
-                        const { id, name, category, reviews, reviewCount, price, description, images, additionalInfo } = item;
+                    if (Number(id) === item._id) {
+                        const { id, name, _id, reviews, reviewCount, category, price, description, images, additionalInfo } = item;
                         return (
                             <>
-                                <Breadcrum key={i} name={name} category={category}/>
-                                <AccessoryView key={i} id={id} name={name} category={category} reviews={reviews} reviewCount={reviewCount} price={price} description={description} images={images} additionalInfo={additionalInfo} />
+                                <Breadcrum key={i} name={name} id={_id} category={category} />
+                                <AccessoryView key={i} id={_id} name={name} _id={_id} reviews={reviews} reviewCount={reviewCount} price={price} description={description} images={images} additionalInfo={additionalInfo} />
                             </>
                         )
                     }

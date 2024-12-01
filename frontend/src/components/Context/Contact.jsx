@@ -28,11 +28,11 @@ const DochakiContextProvider = (props) => {
         for (const item of Object.keys(cartItem)) {
             if (cartItem[item] > 0) {
                 // Use strict equality to prevent type coercion issues
-                let itemInfo = bikeAccessories.find((product) => product.id === Number(item));
+                let itemInfo = bikeAccessories.find((product) => product._id === Number(item));
                 if (itemInfo) { // Check if the item was found
                     totalAmount += itemInfo.price.newPrice * cartItem[item];
                 } else {
-                    console.warn(`Item with ID ${item} not found in bikeAccessories.`);
+                    console.warn(`Item with _id ${item} not found in bikeAccessories.`);
                 }
             }
         }
