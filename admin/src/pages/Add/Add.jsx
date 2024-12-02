@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import './Add.css';
 import nav_icon from "../../assets/db";
+import axios from 'axios';
 
 const Add = () => {
+
+  const url = 'http://localhost:8000';
+
   const [images, setImages] = useState({
     mainImage: null,
     secondImage: null,
@@ -13,13 +17,19 @@ const Add = () => {
   const [data, setData] = useState({
     name: "",
     description: "",
-    price: "",
+    oldPrice: "",
+    newPrice: "",
+    currency: "",
     category: "Universal",
+    material: "",
+    compatibility: "",
+    reviews: 0,
+    reviewCount: 0
   });
 
   const onChangeHandler = (event) => {
     const { name, value } = event.target;
-    setData((data) => ({ ...data, [name]: value }));
+    setData((prevData) => ({ ...prevData, [name]: value }));
   };
 
   const onImageChange = (event, imageType) => {
@@ -38,87 +48,64 @@ const Add = () => {
     const formData = new FormData();
     formData.append("name", data.name);
     formData.append("description", data.description);
-    formData.append("price", Number(data.price));
+    formData.append("oldPrice", Number(data.oldPrice));
+    formData.append("newPrice", Number(data.newPrice));
+    formData.append("currency", data.currency);
     formData.append("category", data.category);
-    formData.append("images", images);
-  }
+    formData.append("material", data.material);
+    formData.append("compatibility", data.compatibility);
+    formData.append("reviews", data.reviews);
+    formData.append("reviewCount", data.reviewCount);
+
+    Object.keys(images).forEach((key) => {
+      if (images[key]) {
+        formData.append(key, images[key]);
+      }
+    });
+
+    // Send the formData to the backend
+    const response = await axios.post(`${url}/api/accesory/add`, formData);
+    if (response.data.success) {
+      setData({
+        name: "",
+        description: "",
+        oldPrice: "",
+        newPrice: "",
+        currency: "",
+        category: "Universal",
+        material: "",
+        compatibility: "",
+        reviews: 0,
+        reviewCount: 0
+      })
+    } else {
+
+    }
+  };
 
   return (
     <div className="add">
-      <form action="" className="flex-col" onSubmit={onSubmitHandler}>
+      <form className="flex-col" onSubmit={onSubmitHandler}>
+        {/* Image Upload Section */}
         <div className="all-image-upload">
-          {/* Main Image */}
-          <div className="add-image-upload flex-col">
-            <p>Main Image</p>
-            <label htmlFor="mainImage">
-              <img
-                src={images.mainImage ? URL.createObjectURL(images.mainImage) : nav_icon.heart_icon}
-                alt="Main"
-                className="image-box"
+          {["mainImage", "secondImage", "thirdImage", "fourthImage"].map((imgType, index) => (
+            <div key={imgType} className="add-image-upload flex-col">
+              <p>{` ${imgType}`}</p>
+              <label htmlFor={imgType}>
+                <img
+                  src={images[imgType] ? URL.createObjectURL(images[imgType]) : nav_icon.heart_icon}
+                  alt={`Preview ${imgType}`}
+                  className="image-box"
+                />
+              </label>
+              <input
+                type="file"
+                id={imgType}
+                onChange={(e) => onImageChange(e, imgType)}
+                hidden
               />
-            </label>
-            <input
-              onChange={(e) => onImageChange(e, 'mainImage')}
-              type="file"
-              id="mainImage"
-              required
-              hidden
-            />
-          </div>
-
-          {/* Second Image */}
-          <div className="add-image-upload flex-col">
-            <p>Second Image</p>
-            <label htmlFor="secondImage">
-              <img
-                src={images.secondImage ? URL.createObjectURL(images.secondImage) : nav_icon.heart_icon}
-                alt="Second"
-                className="image-box"
-              />
-            </label>
-            <input
-              onChange={(e) => onImageChange(e, 'secondImage')}
-              type="file"
-              id="secondImage"
-              hidden
-            />
-          </div>
-
-          {/* Third Image */}
-          <div className="add-image-upload flex-col">
-            <p>Third Image</p>
-            <label htmlFor="thirdImage">
-              <img
-                src={images.thirdImage ? URL.createObjectURL(images.thirdImage) : nav_icon.heart_icon}
-                alt="Third"
-                className="image-box"
-              />
-            </label>
-            <input
-              onChange={(e) => onImageChange(e, 'thirdImage')}
-              type="file"
-              id="thirdImage"
-              hidden
-            />
-          </div>
-
-          {/* Fourth Image */}
-          <div className="add-image-upload flex-col">
-            <p>Fourth Image</p>
-            <label htmlFor="fourthImage">
-              <img
-                src={images.fourthImage ? URL.createObjectURL(images.fourthImage) : nav_icon.heart_icon}
-                alt="Fourth"
-                className="image-box"
-              />
-            </label>
-            <input
-              onChange={(e) => onImageChange(e, 'fourthImage')}
-              type="file"
-              id="fourthImage"
-              hidden
-            />
-          </div>
+            </div>
+          ))}
         </div>
 
         {/* Product Name */}
@@ -152,34 +139,78 @@ const Add = () => {
             <p>Product Category</p>
             <select
               name="category"
-              id=""
               onChange={onChangeHandler}
               value={data.category}
             >
               <option value="ktm">KTM</option>
-              <option value="royal-enfield">R-Enfield</option>
-              <option value="harley-davidson">H-Davidson</option>
-              <option value="keeway">Keeway</option>
-              <option value="kawasaki">Kawasaki</option>
-              <option value="hero">Hero</option>
-              <option value="honda">Honda</option>
-              <option value="triumph">Triumph</option>
-              <option value="bmw">BMW</option>
-              <option value="eliminator">Eliminator</option>
+              <option value="royal-enfield">Royal Enfield</option>
+              <option value="harley-davidson">Harley Davidson</option>
               <option value="universal">Universal</option>
+              {/* Add other options */}
             </select>
           </div>
 
           <div className="add-price flex-col">
-            <p>Product Price</p>
+            <p>Old Price</p>
             <input
               onChange={onChangeHandler}
-              value={data.price}
+              value={data.oldPrice}
               type="number"
-              name="price"
-              placeholder="$20"
+              name="oldPrice"
+              placeholder="Old Price"
+            />
+            <p>New Price</p>
+            <input
+              onChange={onChangeHandler}
+              value={data.newPrice}
+              type="number"
+              name="newPrice"
+              placeholder="New Price"
             />
           </div>
+        </div>
+
+        {/* Reviews Section */}
+        <div className="add-reviews">
+          <p>Reviews</p>
+          <input
+            onChange={onChangeHandler}
+            value={data.reviews}
+            type="number"
+            name="reviews"
+            placeholder="Reviews"
+          />
+          <p>Review Count</p>
+          <input
+            onChange={onChangeHandler}
+            value={data.reviewCount}
+            type="number"
+            name="reviewCount"
+            placeholder="Review Count"
+          />
+        </div>
+
+        {/* Others' Details */}
+        <hr />
+        <h2>Other Details</h2>
+        <div className="others-data flex-col">
+          <p>Material</p>
+          <input
+            onChange={onChangeHandler}
+            value={data.material}
+            type="text"
+            name="material"
+            placeholder="Material (e.g., Steel)"
+          />
+
+          <p>Compatibility</p>
+          <input
+            onChange={onChangeHandler}
+            value={data.compatibility}
+            type="text"
+            name="compatibility"
+            placeholder="Compatibility (e.g., Model names)"
+          />
         </div>
 
         {/* Submit Button */}
