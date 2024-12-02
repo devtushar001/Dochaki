@@ -70,7 +70,6 @@ const accessorySchema = new mongoose.Schema({
 
 
 // Create model from the schema
-const AccessoryModel = mongoose.model('accessory', accessorySchema);
-
+const AccessoryModel = mongoose.models.accessory || mongoose.model('accessory', accessorySchema);
 // Export the model for use in other files
 export default AccessoryModel;

@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import connectDB from './config/connectDB.js';
+import accessoryRouter from './routes/accessoryRoute.js';
 
 dotenv.config();
 
@@ -21,6 +22,9 @@ app.get('/', (req, res) => {
 
 // mongodb connection function running here!
 connectDB(mongo_url);
+
+// API endpoints
+app.use("/api/accessory", accessoryRouter)
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
