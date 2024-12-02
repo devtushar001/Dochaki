@@ -24,8 +24,11 @@ app.get('/', (req, res) => {
 connectDB(mongo_url);
 
 // API endpoints
-app.use("/api/accessory", accessoryRouter)
+app.use("/api/accessory", accessoryRouter);
+app.use("/images", express.static('uploads'));
 
+
+// running server on the port
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
