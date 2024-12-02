@@ -22,10 +22,10 @@ const addAccessory = async (req, res) => {
     },
     description,
     images: {
-      mainImage: req.files['mainImage'] ? `/uploads/${req.files['mainImage'][0].filename}` : null,
-      secondImage: req.files['secondImage'] ? `/uploads/${req.files['secondImage'][0].filename}` : null,
-      thirdImage: req.files['thirdImage'] ? `/uploads/${req.files['thirdImage'][0].filename}` : null,
-      fourthImage: req.files['fourthImage'] ? `/uploads/${req.files['fourthImage'][0].filename}` : null
+      mainImage: req.files['mainImage'] ? `/${req.files['mainImage'][0].filename}` : null,
+      secondImage: req.files['secondImage'] ? `/${req.files['secondImage'][0].filename}` : null,
+      thirdImage: req.files['thirdImage'] ? `/${req.files['thirdImage'][0].filename}` : null,
+      fourthImage: req.files['fourthImage'] ? `/${req.files['fourthImage'][0].filename}` : null
     },
     additionalInfo: {
       material,
@@ -55,4 +55,27 @@ const addAccessory = async (req, res) => {
   }
 };
 
-export { addAccessory };
+// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// All accessory List 
+const accessoryList = async (req, res) => {
+    try {
+      const accessory = await AccessoryModel.find({});
+      if(!accessory) {res.status(501).send({
+        success: false,
+        message: 'Items not available to the database'
+      })}
+      res.status(201).send({
+        success: true,
+        message: "All Item Fetched",
+        accessory
+      })
+    } catch (error) {
+       res.status(501).send({
+        success: false,
+        message: "Error in get all product api",
+        error
+       })
+    }
+}
+
+export { addAccessory, accessoryList };
