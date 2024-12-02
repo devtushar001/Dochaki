@@ -6,6 +6,7 @@ import Add from "./pages/Add/Add";
 import List from "./pages/List/List";
 import Orders from "./pages/Orders/Orders";
 import Panel from "./pages/Panel/Panel";
+import NewAdd from "./pages/NewAdd.jsx/NewAdd";
 // import RoomItem from "./components/RoomItem/RoomItem";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route path="/add" element={<Add />} />
           <Route path="/list" element={<List />} />
           <Route path="/orders" element={<Orders />} />
+          <Route path="/new-add" element={<NewAdd />} />
         </Routes>
       </div>
     </>

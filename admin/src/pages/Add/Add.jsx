@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import './Add.css';
 import nav_icon from "../../assets/db";
 import axios from 'axios';
 
 const Add = () => {
 
-  const url = 'http://localhost:8000';
+  // const url = 'http://localhost:8000';
 
   const [images, setImages] = useState({
     mainImage: null,
@@ -39,57 +39,108 @@ const Add = () => {
     }));
   };
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+
+  // sending product data to the backen
+  // const onSubmitHandler = async (event) => {
+  //   event.preventDefault();
+  
+  //   const formData = new FormData();
+  //   formData.append("name", data.name);
+  //   formData.append("description", data.description);
+  //   formData.append("oldPrice", Number(data.oldPrice));
+  //   formData.append("newPrice", Number(data.newPrice));
+  //   formData.append("currency", data.currency);
+  //   formData.append("category", data.category);
+  //   formData.append("material", data.material);
+  //   formData.append("compatibility", data.compatibility);
+  //   formData.append("reviews", data.reviews);
+  //   formData.append("reviewCount", data.reviewCount);
+  
+  //   Object.keys(images).forEach((key) => {
+  //     if (images[key]) {
+  //       formData.append(key, images[key]);
+  //     }
+  //   });
+  
+  //   try {
+  //     const response = await axios.post('http://localhost:8000/api/accessory/add', formData);
+  //     console.log('Success:', response.data);
+  //     // Add success notification or redirection here if needed
+  //   } catch (error) {
+  //     if (error.response) {
+  //       console.error('Backend Error:', error.response.data);
+  //     } else if (error.request) {
+  //       console.error('No Response from Server:', error.request);
+  //     } else {
+  //       console.error('Error:', error.message);
+  //     }
+  //   }
+  // };
+
+  // name
+  // category
+  // reviews
+  // reviewCount
+  // newPrice
+  // description
+  // mainImage
+  // secondImage
+  // thirdImage
+  // fourthImage
+  // oldPrice
+  // currency
+  // material
+  // compatibility
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
+  
     const formData = new FormData();
     formData.append("name", data.name);
     formData.append("description", data.description);
     formData.append("oldPrice", Number(data.oldPrice));
-    formData.append("newPrice", Number(data.newPrice));
-    formData.append("currency", data.currency);
-    formData.append("category", data.category);
-    formData.append("material", data.material);
-    formData.append("compatibility", data.compatibility);
-    formData.append("reviews", data.reviews);
-    formData.append("reviewCount", data.reviewCount);
-
+    formData.append("newPrice", Number(data.oldPrice));
+    formData.append("currency", "data.currency");
+    formData.append("category", "data.category");
+    formData.append("material", "data.material");
+    formData.append("compatibility", "data.compatibility");
+    formData.append("reviews", "data.reviews");
+    formData.append("reviewCount", "data.reviewCount");
+  
+    // Append images only if they exist
     Object.keys(images).forEach((key) => {
       if (images[key]) {
         formData.append(key, images[key]);
       }
     });
-
-    // Send the formData to the backend
-    const response = await axios.post(`${url}/api/accesory/add`, formData);
-    if (response.data.success) {
-      setData({
-        name: "",
-        description: "",
-        oldPrice: "",
-        newPrice: "",
-        currency: "",
-        category: "Universal",
-        material: "",
-        compatibility: "",
-        reviews: 0,
-        reviewCount: 0
-      })
-    } else {
-
+  
+    try {
+      const response = await fetch('http://localhost:8000/api/accessory/add', {
+        method: 'POST',
+        body: formData, // FormData object is directly sent here
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+  
+      const result = await response.json();
+      console.log('Accessory added successfully:', result);
+    } catch (error) {
+      console.error('Error adding accessory:', error);
     }
   };
+  
+  
+  
 
   return (
     <div className="add">
-      <form className="flex-col" onSubmit={onSubmitHandler}>
+      <form className="flex-col" onSubmit={()=>onSubmitHandler}>
         {/* Image Upload Section */}
         <div className="all-image-upload">
           {["mainImage", "secondImage", "thirdImage", "fourthImage"].map((imgType, index) => (
-            <div key={imgType} className="add-image-upload flex-col">
+            <div key={index} className="add-image-upload flex-col">
               <p>{` ${imgType}`}</p>
               <label htmlFor={imgType}>
                 <img

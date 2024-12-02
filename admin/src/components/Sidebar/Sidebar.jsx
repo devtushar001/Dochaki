@@ -29,7 +29,10 @@ const Sidebar = () => {
               <img src={nav_icon.send_icon} alt="" />
               <p>Orders Items</p>
             </NavLink>
-          
+            <NavLink to='/new-add' className="sidebar-option">
+              <img src={nav_icon.send_icon} alt="" />
+              <p>Add New Item</p>
+            </NavLink>
 
         </div>
       </div>
