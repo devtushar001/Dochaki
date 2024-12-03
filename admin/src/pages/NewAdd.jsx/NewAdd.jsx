@@ -75,6 +75,18 @@ const NewAdd = () => {
       console.error("Error adding accessory:", error);
       alert("Error adding accessory.");
     }
+    setData({
+      name: "",
+      description: "",
+      oldPrice: "",
+      newPrice: "",
+      currency: "",
+      category: "Universal",
+      material: "",
+      compatibility: "",
+      reviews: "",
+      reviewCount: "",
+    })
   };
 
   return (
