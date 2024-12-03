@@ -8,7 +8,7 @@ const Sidebar = () => {
     <>
       <div className="sidebar">
         <div className="sidebar-options">
-          <NavLink to="panel" className="sidebar-option">
+          <NavLink to="/" className="sidebar-option">
             <img src={nav_icon.send_icon} alt="" />
             <p>Admin Account</p>
           </NavLink>

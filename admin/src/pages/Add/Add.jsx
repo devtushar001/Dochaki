@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import './Add.css';
 import nav_icon from "../../assets/db";
 
+
+
 const Add = () => {
+
+  const url = "http://localhost:8000";
   const [data, setData] = useState({
     name: "",
     description: "",
@@ -60,10 +64,12 @@ const Add = () => {
 
     // Send data to the backend
     try {
-      const response = await fetch('http://localhost:8000/api/accessory/add', {
+      const response = await fetch(`${url}/api/accessory/add`, {
         method: 'POST',
         body: formData,
       });
+
+      console.log(response);
 
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
@@ -157,10 +163,17 @@ const Add = () => {
               onChange={handleChange}
               value={data.category}
             >
-              <option value="ktm">KTM</option>
-              <option value="royal-enfield">Royal Enfield</option>
-              <option value="harley-davidson">Harley Davidson</option>
               <option value="universal">Universal</option>
+              <option value="ktm">Benelli</option>
+              <option value="royal-enfield">BMW</option>
+              <option value="harley-davidson">H-Davidson</option>
+              <option value="universal">Hero</option>
+              <option value="universal">Honda</option>
+              <option value="universal">Kawasaki</option>
+              <option value="universal">Keeway</option>
+              <option value="universal">KTM</option>
+              <option value="universal">R-Enfield</option>
+              <option value="universal">Triumph</option>
               {/* Add other options */}
             </select>
           </div>
