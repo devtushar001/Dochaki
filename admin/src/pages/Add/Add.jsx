@@ -1,19 +1,8 @@
 import React, { useState } from "react";
 import './Add.css';
 import nav_icon from "../../assets/db";
-import axios from 'axios';
 
 const Add = () => {
-
-  // const url = 'http://localhost:8000';
-
-  const [images, setImages] = useState({
-    mainImage: null,
-    secondImage: null,
-    thirdImage: null,
-    fourthImage: null
-  });
-
   const [data, setData] = useState({
     name: "",
     description: "",
@@ -23,120 +12,95 @@ const Add = () => {
     category: "Universal",
     material: "",
     compatibility: "",
-    reviews: 0,
-    reviewCount: 0
+    reviews: "",
+    reviewCount: "",
   });
 
-  const onChangeHandler = (event) => {
-    const { name, value } = event.target;
-    setData((prevData) => ({ ...prevData, [name]: value }));
-  };
+  const [images, setImages] = useState({
+    mainImage: null,
+    secondImage: null,
+    thirdImage: null,
+    fourthImage: null,
+  });
 
-  const onImageChange = (event, imageType) => {
-    setImages((prevImages) => ({
-      ...prevImages,
-      [imageType]: event.target.files[0]
+  // Handle text data changes
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setData((prev) => ({
+      ...prev,
+      [name]: value,
     }));
   };
 
+  // Handle image file selection
+  const handleImageChange = (e, imageType) => {
+    setImages((prev) => ({
+      ...prev,
+      [imageType]: e.target.files[0],
+    }));
+  };
 
-  // sending product data to the backen
-  // const onSubmitHandler = async (event) => {
-  //   event.preventDefault();
-  
-  //   const formData = new FormData();
-  //   formData.append("name", data.name);
-  //   formData.append("description", data.description);
-  //   formData.append("oldPrice", Number(data.oldPrice));
-  //   formData.append("newPrice", Number(data.newPrice));
-  //   formData.append("currency", data.currency);
-  //   formData.append("category", data.category);
-  //   formData.append("material", data.material);
-  //   formData.append("compatibility", data.compatibility);
-  //   formData.append("reviews", data.reviews);
-  //   formData.append("reviewCount", data.reviewCount);
-  
-  //   Object.keys(images).forEach((key) => {
-  //     if (images[key]) {
-  //       formData.append(key, images[key]);
-  //     }
-  //   });
-  
-  //   try {
-  //     const response = await axios.post('http://localhost:8000/api/accessory/add', formData);
-  //     console.log('Success:', response.data);
-  //     // Add success notification or redirection here if needed
-  //   } catch (error) {
-  //     if (error.response) {
-  //       console.error('Backend Error:', error.response.data);
-  //     } else if (error.request) {
-  //       console.error('No Response from Server:', error.request);
-  //     } else {
-  //       console.error('Error:', error.message);
-  //     }
-  //   }
-  // };
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  // name
-  // category
-  // reviews
-  // reviewCount
-  // newPrice
-  // description
-  // mainImage
-  // secondImage
-  // thirdImage
-  // fourthImage
-  // oldPrice
-  // currency
-  // material
-  // compatibility
-
-  const onSubmitHandler = async (event) => {
-    event.preventDefault();
-  
     const formData = new FormData();
-    formData.append("name", data.name);
-    formData.append("description", data.description);
-    formData.append("oldPrice", Number(data.oldPrice));
-    formData.append("newPrice", Number(data.oldPrice));
-    formData.append("currency", "data.currency");
-    formData.append("category", "data.category");
-    formData.append("material", "data.material");
-    formData.append("compatibility", "data.compatibility");
-    formData.append("reviews", "data.reviews");
-    formData.append("reviewCount", "data.reviewCount");
-  
-    // Append images only if they exist
+
+    // Append text data to formData
+    Object.keys(data).forEach((key) => {
+      formData.append(key, data[key]);
+    });
+
+    // Append images to formData
     Object.keys(images).forEach((key) => {
       if (images[key]) {
         formData.append(key, images[key]);
       }
     });
-  
+
+    // Send data to the backend
     try {
       const response = await fetch('http://localhost:8000/api/accessory/add', {
         method: 'POST',
-        body: formData, // FormData object is directly sent here
+        body: formData,
       });
-  
+
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-  
+
       const result = await response.json();
-      console.log('Accessory added successfully:', result);
+      console.log("Accessory added successfully:", result);
+      alert("Accessory added successfully!");
     } catch (error) {
-      console.error('Error adding accessory:', error);
+      console.error("Error adding accessory:", error);
+      alert("Error adding accessory.");
     }
+
+    // Reset form fields
+    setData({
+      name: "",
+      description: "",
+      oldPrice: "",
+      newPrice: "",
+      currency: "",
+      category: "Universal",
+      material: "",
+      compatibility: "",
+      reviews: "",
+      reviewCount: "",
+    });
+    setImages({
+      mainImage: null,
+      secondImage: null,
+      thirdImage: null,
+      fourthImage: null,
+    });
   };
-  
-  
-  
 
   return (
     <div className="add">
-      <form className="flex-col" onSubmit={()=>onSubmitHandler}>
+      <form className="flex-col" onSubmit={handleSubmit}>
         {/* Image Upload Section */}
         <div className="all-image-upload">
           {["mainImage", "secondImage", "thirdImage", "fourthImage"].map((imgType, index) => (
@@ -152,7 +116,7 @@ const Add = () => {
               <input
                 type="file"
                 id={imgType}
-                onChange={(e) => onImageChange(e, imgType)}
+                onChange={(e) => handleImageChange(e, imgType)}
                 hidden
               />
             </div>
@@ -163,7 +127,7 @@ const Add = () => {
         <div className="add-product-name flex-col">
           <p>Product Name</p>
           <input
-            onChange={onChangeHandler}
+            onChange={handleChange}
             value={data.name}
             type="text"
             name="name"
@@ -175,7 +139,7 @@ const Add = () => {
         <div className="add-product-description flex-col">
           <p>Product Description</p>
           <textarea
-            onChange={onChangeHandler}
+            onChange={handleChange}
             value={data.description}
             name="description"
             rows="6"
@@ -190,7 +154,7 @@ const Add = () => {
             <p>Product Category</p>
             <select
               name="category"
-              onChange={onChangeHandler}
+              onChange={handleChange}
               value={data.category}
             >
               <option value="ktm">KTM</option>
@@ -204,7 +168,7 @@ const Add = () => {
           <div className="add-price flex-col">
             <p>Old Price</p>
             <input
-              onChange={onChangeHandler}
+              onChange={handleChange}
               value={data.oldPrice}
               type="number"
               name="oldPrice"
@@ -212,11 +176,19 @@ const Add = () => {
             />
             <p>New Price</p>
             <input
-              onChange={onChangeHandler}
+              onChange={handleChange}
               value={data.newPrice}
               type="number"
               name="newPrice"
               placeholder="New Price"
+            />
+            <p>Currency</p>
+            <input
+              onChange={handleChange}
+              value={data.currency}
+              type="text"
+              name="currency"
+              placeholder="Currency Type"
             />
           </div>
         </div>
@@ -225,7 +197,7 @@ const Add = () => {
         <div className="add-reviews">
           <p>Reviews</p>
           <input
-            onChange={onChangeHandler}
+            onChange={handleChange}
             value={data.reviews}
             type="number"
             name="reviews"
@@ -233,7 +205,7 @@ const Add = () => {
           />
           <p>Review Count</p>
           <input
-            onChange={onChangeHandler}
+            onChange={handleChange}
             value={data.reviewCount}
             type="number"
             name="reviewCount"
@@ -247,7 +219,7 @@ const Add = () => {
         <div className="others-data flex-col">
           <p>Material</p>
           <input
-            onChange={onChangeHandler}
+            onChange={handleChange}
             value={data.material}
             type="text"
             name="material"
@@ -256,7 +228,7 @@ const Add = () => {
 
           <p>Compatibility</p>
           <input
-            onChange={onChangeHandler}
+            onChange={handleChange}
             value={data.compatibility}
             type="text"
             name="compatibility"

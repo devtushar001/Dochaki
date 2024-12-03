@@ -11,7 +11,7 @@ const addAccessory = async (req, res) => {
   const { name, category, reviews, reviewCount, oldPrice, newPrice, currency, description, material, compatibility } = req.body;
 
   // Check for required fields
-  if (!name || !category || !oldPrice || !newPrice || !currency || !description) {
+  if (!name || !category || !oldPrice || !newPrice || !description) {
     return res.status(400).json({ error: 'Missing required fields' });
   }
 
