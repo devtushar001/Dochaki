@@ -1,18 +1,25 @@
 import AccessoryModel from "../models/accessoryModel.js";
 import mongoose from "mongoose";
-import fs from 'fs';
+import fs from "fs";
 
 // POST API to add a new product
 const addAccessory = async (req, res) => {
+  const {
+    name,
+    category,
+    reviews,
+    reviewCount,
+    oldPrice,
+    newPrice,
+    currency,
+    description,
+    material,
+    compatibility,
+  } = req.body;
 
-  console.log("Request Body:", req.body);  // Check if the text data is received
-    console.log("Uploaded Files:", req.files); // Check if the files are received
-
-  const { name, category, reviews, reviewCount, oldPrice, newPrice, currency, description, material, compatibility } = req.body;
-
-  // Check for required fields
+  // Validate required fields
   if (!name || !category || !oldPrice || !newPrice || !description) {
-    return res.status(400).json({ error: 'Missing required fields' });
+    return res.json({ success: false, message: "Missing required fields" });
   }
 
   const newProduct = new AccessoryModel({
@@ -23,132 +30,103 @@ const addAccessory = async (req, res) => {
     price: {
       oldPrice: parseFloat(oldPrice),
       newPrice: parseFloat(newPrice),
-      currency
+      currency,
     },
     description,
     images: {
-      mainImage: req.files['mainImage'] ? `/${req.files['mainImage'][0].filename}` : null,
-      secondImage: req.files['secondImage'] ? `/${req.files['secondImage'][0].filename}` : null,
-      thirdImage: req.files['thirdImage'] ? `/${req.files['thirdImage'][0].filename}` : null,
-      fourthImage: req.files['fourthImage'] ? `/${req.files['fourthImage'][0].filename}` : null
+      mainImage: req.files["mainImage"] ? `/${req.files["mainImage"][0].filename}` : null,
+      secondImage: req.files["secondImage"] ? `/${req.files["secondImage"][0].filename}` : null,
+      thirdImage: req.files["thirdImage"] ? `/${req.files["thirdImage"][0].filename}` : null,
+      fourthImage: req.files["fourthImage"] ? `/${req.files["fourthImage"][0].filename}` : null,
     },
     additionalInfo: {
       material,
-      compatibility: typeof compatibility === 'string' ? compatibility.split(',') : []
-    }
+      compatibility: typeof compatibility === "string" ? compatibility.split(",") : [],
+    },
   });
 
   try {
     const item = await newProduct.save();
-    if (!item) {
-      return res.status(500).send({
-        success: false,
-        message: "Database Problem"
-      });
-    }
-    res.status(201).send({
+    res.json({
       success: true,
-      message: "Product Added Successfully",
-      item
+      message: "Accessory Added",
+      data: item,
     });
   } catch (error) {
-    res.status(501).send({
+    console.error("Add Accessory Error:", error);
+    res.json({
       success: false,
-      message: error.message || "Product Adding Api Error"
+      message: "Error adding accessory",
     });
-    console.error(error);
   }
 };
 
-// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-// All accessory List 
+// Fetch all accessories
 const accessoryList = async (req, res) => {
   try {
-    const accessory = await AccessoryModel.find({});
-    if (!accessory) {
-      res.status(501).send({
-        success: false,
-        message: 'Items not available to the database'
-      })
-    }
-    res.status(201).send({
+    const accessories = await AccessoryModel.find({});
+    res.json({
       success: true,
-      message: "All Item Fetched",
-      accessory
-    })
-  } catch (error) {
-    res.status(501).send({
-      success: false,
-      message: "Error in get all product api",
-      error
-    })
-  }
-}
-
-// -----------------------------------------------------------------------------------
-//remove accessory item
-const removeAccessory = async (req, res) => {
-  const productId = req.body.id;
-  // Check if productId is provided
-  if (!productId) {
-    return res.status(400).send({
-      success: false,
-      message: "Please provide Product ID",
-    });
-  }
-
-  // Validate ObjectId
-  if (!mongoose.Types.ObjectId.isValid(productId)) {
-    return res.status(400).send({
-      success: false,
-      message: "Invalid Product ID",
-    });
-  }
-
-  try {
-    // Find the accessory
-    const accessory = await AccessoryModel.findById(productId);
-    if (!accessory) {
-      return res.status(404).send({
-        success: false,
-        message: "Product not found",
-      });
-    }
-
-    // Safely delete the file
-    // Delete associated images from the file system
-    const images = accessory.images || {};
-    const imagePaths = [
-      images.mainImage,
-      images.secondImage,
-      images.thirdImage,
-      images.fourthImage,
-    ].filter(Boolean); // Ensure paths are valid strings
-
-    imagePaths.forEach((path) => {
-      const fullPath = `uploads${path}`; // Adjust the base directory if needed
-      fs.unlink(fullPath, (err) => {
-        if (err) {
-          console.error(`Failed to delete image: ${fullPath}`, err);
-        }
-      });
-    });
-
-    // Delete the accessory
-    await AccessoryModel.findByIdAndDelete(productId);
-
-    return res.status(200).send({
-      success: true,
-      message: "Product removed successfully",
+      message: "Accessories fetched successfully",
+      data: accessories,
     });
   } catch (error) {
-    console.error("Error while removing accessory:", error);
-    return res.status(500).send({
+    console.error("Accessory List Error:", error);
+    res.json({
       success: false,
-      message: "Internal Server Error",
+      message: "Error fetching accessories",
     });
   }
 };
 
+// Remove an accessory
+const removeAccessory = async (req, res) => {
+  const productId = req.body.id;
+
+  if (!productId || !mongoose.Types.ObjectId.isValid(productId)) {
+    return res.status(400).json({
+      success: false,
+      message: "Invalid or missing Product ID",
+    });
+  }
+
+  try {
+    const accessory = await AccessoryModel.findById(productId);
+
+    if (!accessory) {
+      return res.status(404).json({
+        success: false,
+        message: "Accessory not found",
+      });
+    }
+
+    // Delete associated images
+    const imagePaths = [
+      accessory.images.mainImage,
+      accessory.images.secondImage,
+      accessory.images.thirdImage,
+      accessory.images.fourthImage,
+    ].filter(Boolean);
+
+    imagePaths.forEach((path) => {
+      const fullPath = `uploads${path}`;
+      fs.unlink(fullPath, (err) => {
+        if (err) console.error(`Failed to delete image: ${fullPath}`, err);
+      });
+    });
+
+    await accessory.remove();
+    res.json({
+      success: true,
+      message: "Accessory removed successfully",
+    });
+  } catch (error) {
+    console.error("Remove Accessory Error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Error removing accessory",
+    });
+  }
+};
 
 export { addAccessory, accessoryList, removeAccessory };

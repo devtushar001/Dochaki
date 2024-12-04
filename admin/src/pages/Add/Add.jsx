@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import './Add.css';
 import nav_icon from "../../assets/db";
-
-
+import { toast } from "react-toastify";
 
 const Add = () => {
 
@@ -69,18 +68,14 @@ const Add = () => {
         body: formData,
       });
 
-      console.log(response);
-
       if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+        toast.error(response.message);
       }
 
       const result = await response.json();
-      console.log("Accessory added successfully:", result);
-      alert("Accessory added successfully!");
+      toast.success(result.message);
     } catch (error) {
-      console.error("Error adding accessory:", error);
-      alert("Error adding accessory.");
+      toast.error(error);
     }
 
     // Reset form fields
@@ -102,6 +97,7 @@ const Add = () => {
       thirdImage: null,
       fourthImage: null,
     });
+    toast.success(response.data.success);
   };
 
   return (
@@ -128,7 +124,6 @@ const Add = () => {
             </div>
           ))}
         </div>
-
         {/* Product Name */}
         <div className="add-product-name flex-col">
           <p>Product Name</p>
@@ -204,8 +199,11 @@ const Add = () => {
               placeholder="Currency Type"
             />
           </div>
-        </div>
 
+        </div>
+        <button type="submit" className="add-btn">ADD</button>
+        <hr />
+        <h2>Other Details</h2>
         {/* Reviews Section */}
         <div className="add-reviews">
           <p>Reviews</p>
@@ -227,8 +225,7 @@ const Add = () => {
         </div>
 
         {/* Others' Details */}
-        <hr />
-        <h2>Other Details</h2>
+       
         <div className="others-data flex-col">
           <p>Material</p>
           <input
@@ -250,7 +247,7 @@ const Add = () => {
         </div>
 
         {/* Submit Button */}
-        <button type="submit" className="add-btn">ADD</button>
+        {/* <button type="submit" className="add-btn">ADD</button> */}
       </form>
     </div>
   );
