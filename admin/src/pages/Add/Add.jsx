@@ -3,9 +3,9 @@ import './Add.css';
 import nav_icon from "../../assets/db";
 import { toast } from "react-toastify";
 
-const Add = () => {
+const Add = ({url}) => {
 
-  const url = "http://localhost:8000";
+  // const url = "http://localhost:8000";
   const [data, setData] = useState({
     name: "",
     description: "",

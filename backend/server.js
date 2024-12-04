@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import connectDB from './config/connectDB.js';
 import accessoryRouter from './routes/accessoryRoute.js';
+import userRouter from './routes/userRoute.js';
 
 dotenv.config();
 
@@ -31,6 +32,9 @@ connectDB(mongo_url);
 // API endpoints
 app.use("/api/accessory", accessoryRouter);
 app.use("/images", express.static('uploads'));
+
+// user router
+app.use("/api/user", userRouter)
 
 
 // running server on the port
