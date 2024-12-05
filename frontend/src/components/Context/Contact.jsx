@@ -1,10 +1,34 @@
 import React, { useEffect, useState } from "react";
 import { createContext } from "react";
-import { bikeAccessories } from "../../assets/assets"
+import { toast } from "react-toastify";
 export const DochakiContext = createContext(null);
 
 const DochakiContextProvider = (props) => {
     const [cartItem, setCartItem] = useState({});
+    const [token, setToken] = useState("");
+    const [bikeAccessories, setBikeAccessories] = useState([])
+    const url = 'http://localhost:8000';
+
+    const fetchBikeAccessoriesList = async () => {
+        try {
+            const response = await fetch(`${url}/api/accessory/list`);
+            const result = await response.json();
+            if (!response.ok) {
+                toast.error(result.message);
+            }
+            if (result.success) {
+                toast.success(response.message);
+                setBikeAccessories(result.data); // Assuming API sends data in `data`
+            } else {
+                toast.error(result.message)
+                // throw new Error(result.message || "Failed to fetch accessories");
+            }
+        } catch (err) {
+            toast.error("Fetch Error:", err.message);
+        } finally {
+            console.log(false)
+        }
+    };
 
     const addToCart = (itemId) => {
         if (!cartItem[itemId]) {
@@ -28,7 +52,7 @@ const DochakiContextProvider = (props) => {
         for (const item of Object.keys(cartItem)) {
             if (cartItem[item] > 0) {
                 // Use strict equality to prevent type coercion issues
-                let itemInfo = bikeAccessories.find((product) => product._id === Number(item));
+                let itemInfo = bikeAccessories.find((product) => product._id === item);
                 if (itemInfo) { // Check if the item was found
                     totalAmount += itemInfo.price.newPrice * cartItem[item];
                 } else {
@@ -40,11 +64,15 @@ const DochakiContextProvider = (props) => {
         return totalAmount;
     };
 
-
-
     useEffect(() => {
-        console.log(cartItem);
-        console.log(getTotalCartAmount())
+
+        async function loadData() {
+            await fetchBikeAccessoriesList();
+            if (localStorage.getItem("token")) {
+                setToken(localStorage.getItem("token"));
+            }
+        }
+        loadData();
     }, [cartItem])
 
     const contextValue = {
@@ -52,7 +80,10 @@ const DochakiContextProvider = (props) => {
         addToCart,
         removeFromCart,
         cartItem,
-        getTotalCartAmount
+        getTotalCartAmount,
+        url,
+        token,
+        setToken
     }
 
     return (

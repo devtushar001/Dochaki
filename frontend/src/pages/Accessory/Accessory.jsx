@@ -6,18 +6,19 @@ import Breadcrum from "../../components/Breadcrum/Breadcrum";
 
 const Accessory = () => {
     const { id } = useParams();
+    // console.log("parameter",id);
+    const newId = id;
     const { bikeAccessories } = useContext(DochakiContext);
-
     return (
         <>
             <div className="accessory-full-view">
                 {bikeAccessories.map((item, i) => {
-                    if (Number(id) === item._id) {
-                        const { id, name, _id, reviews, reviewCount, category, price, description, images, additionalInfo } = item;
+                    if (newId === item._id) {
+                        const { _id, name,  reviews, reviewCount, category, price, description, images, additionalInfo } = item;
                         return (
                             <>
                                 <Breadcrum key={i} name={name} id={_id} category={category} />
-                                <AccessoryView key={i} id={_id} name={name} _id={_id} reviews={reviews} reviewCount={reviewCount} price={price} description={description} images={images} additionalInfo={additionalInfo} />
+                                <AccessoryView key={i} _id={_id} name={name} reviews={reviews} reviewCount={reviewCount} price={price} description={description} images={images} additionalInfo={additionalInfo} />
                             </>
                         )
                     }

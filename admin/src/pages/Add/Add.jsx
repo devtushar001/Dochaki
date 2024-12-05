@@ -159,16 +159,16 @@ const Add = ({url}) => {
               value={data.category}
             >
               <option value="universal">Universal</option>
-              <option value="ktm">Benelli</option>
-              <option value="royal-enfield">BMW</option>
+              <option value="benelli">Benelli</option>
+              <option value="bmw">BMW</option>
               <option value="harley-davidson">H-Davidson</option>
-              <option value="universal">Hero</option>
-              <option value="universal">Honda</option>
-              <option value="universal">Kawasaki</option>
-              <option value="universal">Keeway</option>
-              <option value="universal">KTM</option>
-              <option value="universal">R-Enfield</option>
-              <option value="universal">Triumph</option>
+              <option value="hero">Hero</option>
+              <option value="honda">Honda</option>
+              <option value="kawasaki">Kawasaki</option>
+              <option value="keeway">Keeway</option>
+              <option value="ktm">KTM</option>
+              <option value="royal-enfield">R-Enfield</option>
+              <option value="triumph">Triumph</option>
               {/* Add other options */}
             </select>
           </div>
@@ -193,7 +193,9 @@ const Add = ({url}) => {
             <p>Currency</p>
             <input
               onChange={handleChange}
-              value={data.currency}
+              value={!data.currency ? "INR" :data.currency}
+              // value="INR"
+              // value={data.currency}
               type="text"
               name="currency"
               placeholder="Currency Type"

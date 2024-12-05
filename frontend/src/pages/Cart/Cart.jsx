@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { DochakiContext } from "../../components/Context/Contact";
 
 const Cart = () => {
-    const { cartItem, bikeAccessories, removeFromCart, getTotalCartAmount } = useContext(DochakiContext);
+    const { cartItem, bikeAccessories, removeFromCart, getTotalCartAmount, url } = useContext(DochakiContext);
     const navigate = useNavigate();
     return (
         <>
@@ -25,7 +25,7 @@ const Cart = () => {
                             return (
                                 <>
                                     <div className="cart-items-title cart-items-item">
-                                        <Link to={`/accessory/${item._id}`}><img src={item.images.mainImage} alt="" /></Link>
+                                        <Link to={`/accessory/${item._id}`}><img src={`${url}/images/${item.images.mainImage}`} alt="" /></Link>
                                         <p>{item.name}</p>
                                         <p>&#8377;{item.price.newPrice}</p>
                                         <p>{cartItem[item._id]}</p>

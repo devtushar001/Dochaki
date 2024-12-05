@@ -6,13 +6,13 @@ import './AccessoriesItem.css';
 import { DochakiContext } from "../Context/Contact";
 
 const AccessoriesItem = (props) => {
-  const {addToCart, removeFromCart, cartItem} = useContext(DochakiContext);
+  const {addToCart, removeFromCart, cartItem, url} = useContext(DochakiContext);
   const { _id, name, price, images, category, reviews, reviewCount } = props;
   return (
     <>
       <div className="accessory-item">
         <div className="accessories-item-img-container">
-          <img src={images} alt="" className="accessory-item-image" />
+          <img src={url+"/images/"+images} alt="" className="accessory-item-image" />
           {!cartItem[_id] ? <img className="add" onClick={() => addToCart(_id)} src={fassets.add_icon_white} alt="" />
             : <div className="accessory-item-counter">
               <img src={fassets.remove_icon_red} onClick={() => removeFromCart(_id)} alt="" />

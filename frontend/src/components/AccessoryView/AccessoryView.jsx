@@ -5,9 +5,10 @@ import { Link } from "react-router-dom";
 import { DochakiContext } from "../Context/Contact";
 
 const AccessoryView = (props) => {
-    const { addToCart, removeFromCart, cartItem } = useContext(DochakiContext);
-    const { _id, name, category, reviews, reviewCount, price, description, images, additionalInfo } = props;
-    const [mainImage, setMainImage] = useState(images.mainImage);
+    // console.log(props)
+    const { addToCart, removeFromCart, cartItem, url } = useContext(DochakiContext);
+    const { _id, name,  reviews, reviewCount, category, price, description, images, additionalInfo } = props;
+    const [mainImage, setMainImage] = useState(url+"/images/"+images.mainImage);
     const [animationClass, setAnimationClass] = useState('');
 
     useEffect(() => {
@@ -24,10 +25,10 @@ const AccessoryView = (props) => {
             <div className="accessory-view">
                 <div className="accessory-view-left">
                     <div className="accessory-view-img-list">
-                        <img onClick={() => { setMainImage(images.mainImage) }} src={images.mainImage} alt="" />
-                        <img onClick={() => { setMainImage(images.secondImage) }} src={images.secondImage} alt="" />
-                        <img onClick={() => { setMainImage(images.thirdImage) }} src={images.thirdImage} alt="" />
-                        <img onClick={() => { setMainImage(images.fourthImage) }} src={images.fourthImage} alt="" />
+                        <img onClick={() => { setMainImage(url+"/images/"+images.mainImage) }} src={url+"/images/"+images.mainImage} alt="" />
+                        <img onClick={() => { setMainImage(url+"/images/"+images.secondImage) }} src={url+"/images/"+images.secondImage} alt="" />
+                        <img onClick={() => { setMainImage(url+"/images/"+images.thirdImage) }} src={url+"/images/"+images.thirdImage} alt="" />
+                        <img onClick={() => { setMainImage(url+"/images/"+images.fourthImage) }} src={url+"/images/"+images.fourthImage} alt="" />
                     </div>
                     <div className="accessory-view-img">
                         <img src={mainImage} className={`accessory-view-main-image ${animationClass}`} alt="" />
@@ -41,10 +42,10 @@ const AccessoryView = (props) => {
                     </div>
                     <div className="accessory-view-right-prices">
                         <div className="accessory-view-right-price-old">
-                            &#8377;{price.oldPrice}
+                            {price.oldPrice} <span>{price.currency}</span>
                         </div>
                         <div className="accessory-view-right-price-new">
-                            &#8377;{price.newPrice}
+                            {price.newPrice} <span>{price.currency}</span>
                         </div>
                     </div>
                     <div className="accessory-view-right-description">
@@ -76,7 +77,7 @@ const AccessoryView = (props) => {
 
                     </div>
                     <div className="buttons">
-                        <Link to={'/cart'}><button className="buy-now" onClick={() => { cartItem[_id] === undefined || !cartItem[_id] == NaN ? addToCart(_id) : console.log(cartItem[_id]) }}>BUY NOW</button></Link>
+                        <Link to={'/cart'}><button className="buy-now" onClick={() => { cartItem[_id] === undefined ? addToCart(_id) : console.log(cartItem[_id]) }}>BUY NOW</button></Link>
                         <button className="add-to" onClick={() => { addToCart(_id) }} >ADD TO CART</button>
                     </div>
                 </div>
