@@ -1,5 +1,5 @@
 import categoryModel from "../models/categoryModel.js";
-import multer from 'multer'; // Import your Multer config
+//import multer from 'multer'; // Import your Multer config
 
 const addCategory = async (req, res) => {
     try {

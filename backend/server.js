@@ -44,6 +44,7 @@ app.use('/api/cart', cartRouter);
 // category router
 app.use('/api/category', categoryRouter);
 app.use('/catupload', express.static('catupload'));
+// http://localhost:8000/catupload//menu_image-1733413564680-877237691.jpeg image format
 
 
 

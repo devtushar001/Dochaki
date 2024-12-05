@@ -1,8 +1,9 @@
-import multer from 'multer'
+import multer from 'multer';
+import path from 'path';
 // Configure storage options
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'catupload/'); // Directory to save uploaded files
+        cb(null, 'catupload'); // Directory to save uploaded files
     },
     filename: (req, file, cb) => {
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
@@ -29,4 +30,4 @@ const upload = multer({
 });
 
 
-export default multer;
+export default upload;
