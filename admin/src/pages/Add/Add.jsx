@@ -3,7 +3,7 @@ import './Add.css';
 import nav_icon from "../../assets/db";
 import { toast } from "react-toastify";
 
-const Add = ({url}) => {
+const Add = ({ url }) => {
 
   // const url = "http://localhost:8000";
   const [data, setData] = useState({
@@ -159,17 +159,17 @@ const Add = ({url}) => {
               onChange={handleChange}
               value={data.category}
             >
-              <option value="universal">Universal</option>
-              <option value="benelli">Benelli</option>
-              <option value="bmw">BMW</option>
-              <option value="harley-davidson">H-Davidson</option>
-              <option value="hero">Hero</option>
-              <option value="honda">Honda</option>
-              <option value="kawasaki">Kawasaki</option>
-              <option value="keeway">Keeway</option>
-              <option value="ktm">KTM</option>
-              <option value="royal-enfield">R-Enfield</option>
-              <option value="triumph">Triumph</option>
+              <option value="Benelli">Benelli</option>
+              <option value="BMW">BMW</option>
+              <option value="H-Davidson">H-Davidson</option>
+              <option value="Hero">Hero</option>
+              <option value="Honda">Honda</option>
+              <option value="Kawasaki">Kawasaki</option>
+              <option value="Keeway">Keeway</option>
+              <option value="KTM">KTM</option>
+              <option value="R-Enfield">R-Enfield</option>
+              <option value="Triumph">Triumph</option>
+              <option value="Universal">Universal</option>
               {/* Add other options */}
             </select>
           </div>
@@ -194,7 +194,7 @@ const Add = ({url}) => {
             <p>Currency</p>
             <input
               onChange={handleChange}
-              value={handleChange ?"INR":data.currency}
+              value={handleChange ? "INR" : data.currency}
               // value="INR"
               // value={data.currency}
               type="text"
@@ -228,7 +228,7 @@ const Add = ({url}) => {
         </div>
 
         {/* Others' Details */}
-       
+
         <div className="others-data flex-col">
           <p>Material</p>
           <input
