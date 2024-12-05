@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import connectDB from './config/connectDB.js';
 import accessoryRouter from './routes/accessoryRoute.js';
 import userRouter from './routes/userRoute.js';
+import cartRouter from './routes/cartRoute.js';
 
 dotenv.config();
 
@@ -34,7 +35,10 @@ app.use("/api/accessory", accessoryRouter);
 app.use("/images", express.static('uploads'));
 
 // user router
-app.use("/api/user", userRouter)
+app.use("/api/user", userRouter);
+
+// cart router
+app.use('/api/cart', cartRouter);
 
 
 // running server on the port

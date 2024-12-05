@@ -85,7 +85,7 @@ const Add = ({url}) => {
       oldPrice: "",
       newPrice: "",
       currency: "",
-      category: "Universal",
+      category: "",
       material: "",
       compatibility: "",
       reviews: "",
@@ -100,6 +100,7 @@ const Add = ({url}) => {
     toast.success(response.data.success);
   };
 
+  console.log(data);
   return (
     <div className="add">
       <form className="flex-col" onSubmit={handleSubmit}>
@@ -193,7 +194,7 @@ const Add = ({url}) => {
             <p>Currency</p>
             <input
               onChange={handleChange}
-              value={!data.currency ? "INR" :data.currency}
+              value={handleChange ?"INR":data.currency}
               // value="INR"
               // value={data.currency}
               type="text"

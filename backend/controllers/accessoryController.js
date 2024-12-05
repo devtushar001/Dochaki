@@ -19,7 +19,7 @@ const addAccessory = async (req, res) => {
 
   // Validate required fields
   if (!name || !category || !oldPrice || !newPrice || !description) {
-     res.json({ success: false, message: "Missing required fields" });
+    return res.json({ success: false, message: "Missing required fields" });
   }
 
   const newProduct = new AccessoryModel({
@@ -47,19 +47,17 @@ const addAccessory = async (req, res) => {
 
   try {
     const item = await newProduct.save();
-    res.json({
+    return res.json({
       success: true,
       message: "Accessory Added",
       data: item,
     });
-    return;
   } catch (error) {
-    console.error("Add Accessory Error:", error);
-    res.json({
+    // console.error("Add Accessory Error:", error);
+    return res.json({
       success: false,
-      message: "Error adding accessory",
+      message: "Error adding accessory" + error,
     });
-    return;
   }
 };
 
@@ -67,19 +65,17 @@ const addAccessory = async (req, res) => {
 const accessoryList = async (req, res) => {
   try {
     const accessories = await AccessoryModel.find({});
-    res.json({
+    return res.json({
       success: true,
       message: "Accessories fetched successfully",
       data: accessories,
     });
-    return;
   } catch (error) {
-    console.error("Accessory List Error:", error);
-    res.json({
+    // console.error("Accessory List Error:", error);
+    return res.json({
       success: false,
-      message: "Error fetching accessories",
+      message: "Error fetching accessories" + error,
     });
-    return;
   }
 };
 
@@ -88,22 +84,20 @@ const removeAccessory = async (req, res) => {
   const productId = req.body.id;
 
   if (!productId || !mongoose.Types.ObjectId.isValid(productId)) {
-    res.json({
+    return res.json({
       success: false,
       message: "Invalid or missing Product ID",
     });
-    return;
   }
 
   try {
     const accessory = await AccessoryModel.findById(productId);
 
     if (!accessory) {
-      res.json({
+      return res.json({
         success: false,
         message: "Accessory not found",
       });
-      return;
     }
 
     // Delete associated images
@@ -115,11 +109,10 @@ const removeAccessory = async (req, res) => {
     ].filter(Boolean);
 
     if (!imagePaths) {
-      res.json({
+      return res.json({
         success: false,
         message: "Not Found"
       })
-      return;
     }
 
     imagePaths.forEach((path) => {
@@ -130,18 +123,16 @@ const removeAccessory = async (req, res) => {
     });
 
     await accessory.deleteOne();
-    res.json({
+    return res.json({
       success: true,
       message: "Accessory removed successfully",
     });
-    return;
   } catch (error) {
     console.error("Remove Accessory Error:", error);
-    res.json({
+    return res.json({
       success: false,
-      message: "Error removing accessory",
+      message: "Error removing accessory" + error,
     });
-    return;
   }
 };
 

@@ -10,7 +10,7 @@ const AccessoryView = (props) => {
     const { _id, name,  reviews, reviewCount, category, price, description, images, additionalInfo } = props;
     const [mainImage, setMainImage] = useState(url+"/images/"+images.mainImage);
     const [animationClass, setAnimationClass] = useState('');
-
+console.log(price)
     useEffect(() => {
         // Trigger the animation when the mainImage changes
         setAnimationClass('slide');
