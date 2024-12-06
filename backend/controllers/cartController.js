@@ -2,75 +2,175 @@ import userModel from "../models/userModel.js";
 // add items to user cart 
 const addToCart = async (req, res) => {
     try {
-        // Extracting userdata from the database using middleware auth token extracting ID
-        const userId = req.body.userID;
-        if (!userId) {
-            return res.json({
+        const userId = req.user.id; // From middleware
+        const { itemId } = req.body;
+
+        // Validate itemId
+        if (!itemId) {
+            return res.status(400).json({
                 success: false,
-                message: "Invalid token"
+                message: "Item ID is required",
             });
         }
 
-        // Fetch user data from the database
+        // Fetch user data
         const userData = await userModel.findById(userId);
         if (!userData) {
-            return res.json({
+            return res.status(404).json({
                 success: false,
-                message: "User data not found"
+                message: "User not found",
             });
         }
 
-        // Initialize and update cart data
-        const cartData = userData.cartData || {};
-        const itemId = req.body.itemId;
-        if (!itemId) {
-            return res.json({
-                success: false,
-                message: "Item ID is required"
-            });
-        }
+        // Initialize cartData if not present
+        let cartData = userData.cartData || {};
 
-        cartData[itemId] = (cartData[itemId] ?? 0) + 1;
+        // Update or add item in cart
+        cartData[itemId] = (cartData[itemId] || 0) + 1;
 
-        // Update the user document in the database
+        // Update user's cartData in database
         const updatedUser = await userModel.findByIdAndUpdate(
             userId,
-            { cartData },
+            { $set: { cartData } },
             { new: true } // Return the updated document
         );
 
         if (!updatedUser) {
-            return res.json({
+            return res.status(500).json({
                 success: false,
-                message: "Cart data not updated"
+                message: "Failed to update cart",
             });
         }
 
-        // Return success response
-        return res.json({
+        return res.status(200).json({
             success: true,
-            message: "Product added to cart",
-            cart: updatedUser.cartData
+            message: "Product added to cart successfully",
+            cart: updatedUser.cartData,
         });
-
     } catch (error) {
         console.error("Error adding to cart:", error);
-        return res.json({
+        return res.status(500).json({
             success: false,
-            message: `Error: ${error.message || error}`
+            message: "An error occurred while adding the product to the cart",
+        });
+    }
+};
+
+// remove items from user's cart 
+const removeFromCart = async (req, res) => {
+    try {
+        const userId = req.user.id; // From middleware
+        const { itemId } = req.body;
+
+        // Validate itemId
+        if (!itemId) {
+            return res.status(400).json({
+                success: false,
+                message: "Item ID is required",
+            });
+        }
+
+        // Fetch user data
+        const userData = await userModel.findById(userId);
+        if (!userData) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found",
+            });
+        }
+
+        // Initialize cartData if not present
+        let cartData = userData.cartData || {};
+
+        // Check if item exists in the cart
+        if (!cartData[itemId]) {
+            return res.status(400).json({
+                success: false,
+                message: "Item not found in cart",
+            });
+        }
+
+        // Decrease quantity or remove item
+        if (cartData[itemId] > 1) {
+            cartData[itemId] -= 1;
+        } else {
+            delete cartData[itemId];
+        }
+
+        // Update user's cartData in database
+        const updatedUser = await userModel.findByIdAndUpdate(
+            userId,
+            { $set: { cartData } },
+            { new: true } // Return the updated document
+        );
+
+        if (!updatedUser) {
+            return res.status(500).json({
+                success: false,
+                message: "Failed to update cart",
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: "Product removed from cart successfully",
+            cart: updatedUser.cartData,
+        });
+    } catch (error) {
+        console.error("Error removing from cart:", error);
+        return res.status(500).json({
+            success: false,
+            message: "An error occurred while removing the product from the cart",
         });
     }
 };
 
 
-// remove items from user's cart 
-const removeFromCart = async (req, res) => {
-
-}
 
 // fetch user Cart Data 
 const getCart = async (req, res) => {
+    try {
+        const userId = req.body.userID;
 
-}
+        if (!userId) {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid user"
+            });
+        }
+
+        // Find the user in the database
+        const userData = await userModel.findById(userId);
+        if (!userData) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found in the database"
+            });
+        }
+
+        // Retrieve the cart data
+        const cartData = userData.cartData || {};
+        if (!Object.keys(cartData).length) {
+            return res.status(404).json({
+                success: false,
+                message: "Cart is empty"
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: "Cart data fetched successfully",
+            cartData,
+        });
+    } catch (error) {
+        console.error("Error fetching cart data:", error);
+        return res.status(500).json({
+            success: false,
+            message: "Internal server error",
+            error: error.message
+        });
+    }
+};
+
 
 export { addToCart, removeFromCart, getCart }

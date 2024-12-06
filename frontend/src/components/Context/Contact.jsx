@@ -30,19 +30,85 @@ const DochakiContextProvider = (props) => {
         }
     };
 
-    const addToCart = (itemId) => {
+
+    const addToCart = async (itemId) => {
+        // Update cart state locally
         if (!cartItem[itemId]) {
             setCartItem((prev) => ({ ...prev, [itemId]: 1 }));
         } else {
             setCartItem((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
         }
-    }
 
-    const removeFromCart = (itemId) => {
+        // Check if the token exists
+        if (!token) {
+            toast.error("Please log in to add items to your cart");
+            return;
+        }
+
+        try {
+            // API Call to update the cart
+            const response = await fetch(`${url}/api/cart/add`, {
+                method: "POST", // Use POST or PUT as per your API design
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`, // Correct header for bearer tokens
+                },
+                body: JSON.stringify({
+                    itemId,
+                    quantity: cartItem[itemId] ? cartItem[itemId] + 1 : 1, // Send the updated quantity
+                }),
+            });
+
+            // Parse the response
+            const result = await response.json();
+            if (response.ok && result.success) {
+                // toast.success(result.cart);
+                toast.success(result.message);
+            } else {
+                toast.error(result.message);
+            }
+        } catch (error) {
+            toast.error("Network error. Please try again.");
+        }
+    };
+
+
+
+    const removeFromCart = async (itemId) => {
         if (cartItem[itemId] === 0) {
             setCartItem(0);
         }
         setCartItem((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
+
+        if (!token) {
+            toast.error("Please log in to remove items from your cart");
+            return;
+        }
+
+        try {
+            // API Call to update the cart
+            const response = await fetch(`${url}/api/cart/remove`, {
+                method: "POST", // Use the correct HTTP method based on your API design
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`, // Pass the token in the Authorization header
+                },
+                body: JSON.stringify({
+                    itemId,
+                    quantity: cartItem[itemId] > 1 ? cartItem[itemId] - 1 : 0, // Decrease quantity or set to 0
+                }),
+            });
+
+            // Parse the response
+            const result = await response.json();
+            if (response.ok && result.success) {
+                toast.success(result.message); // Display success message
+            } else {
+                toast.error(result.message); // Handle API errors
+            }
+        } catch (error) {
+            toast.error("Network error. Please try again.");
+        }
     }
 
     const getTotalCartAmount = () => {

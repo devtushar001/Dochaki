@@ -1,21 +1,33 @@
 import jwt from 'jsonwebtoken';
 
 const isAuth = async (req, res, next) => {
-    const { token } = req.headers;
-    if (!token) { return res.json({ success: false, message: "Not authorized login again" }) }
     try {
-        const token_decode = jwt.verify(token, process.env.JWT_SECRET);
-        console.log(token_decode)
-        req.body.userID = token_decode.id;
-        console.log(req.body.userID);
-         next();
+        // Extract token from the Authorization header
+        const authHeader = req.headers.authorization;
+        if (!authHeader || !authHeader.startsWith("Bearer ")) {
+            return res.json({
+                success: false,
+                message: "Authorization token missing or invalid",
+            });
+        }
+
+        // Get the token by removing "Bearer "
+        const token = authHeader.split(" ")[1];
+
+        // Verify the token
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        // Attach user ID to the request object
+        req.user = { id: decoded.id };
+
+        next(); // Proceed to the next middleware or route handler
     } catch (error) {
-        console.log(error)
-        return res.json({
+        return res.status(403).json({
             success: false,
-            message: "Error in getting user id middleware"
-        })
+            message: "Invalid or expired token. Please log in again.",
+        });
     }
-}
+};
+
 
 export default isAuth;
