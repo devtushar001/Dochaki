@@ -18,7 +18,7 @@ const DochakiContextProvider = (props) => {
             if (!response.ok) {
                 toast.error(result.message);
             } else if (result.success) {
-                toast.success(result.message);
+                // toast.success(result.message);
                 setBikeAccessories(result.data); // Assuming API sends data in `data`
             } else {
                 toast.error(result.message);
@@ -138,10 +138,13 @@ const DochakiContextProvider = (props) => {
             });
 
             const result = await response.json();
+            // setCartItem(result.cart)
             if (response.ok && result.success) {
                 setCartItem(result.cartData); // Assuming `cartData` is the object with item quantities
+                // setCartItem(result.cartData)
             } else {
-                toast.error(result.message);
+                return;
+                // toast.error(result.message);
             }
         } catch (error) {
             toast.error("Network error. Please try again.");

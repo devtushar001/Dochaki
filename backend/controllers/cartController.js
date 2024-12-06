@@ -48,7 +48,6 @@ const addToCart = async (req, res) => {
             cart: updatedUser.cartData,
         });
     } catch (error) {
-        console.error("Error adding to cart:", error);
         return res.status(500).json({
             success: false,
             message: "An error occurred while adding the product to the cart",
@@ -117,7 +116,6 @@ const removeFromCart = async (req, res) => {
             cart: updatedUser.cartData,
         });
     } catch (error) {
-        console.error("Error removing from cart:", error);
         return res.status(500).json({
             success: false,
             message: "An error occurred while removing the product from the cart",
@@ -131,15 +129,12 @@ const removeFromCart = async (req, res) => {
 const getCart = async (req, res) => {
     try {
         const userId = req.user.id;
-
         if (!userId) {
             return res.status(400).json({
                 success: false,
                 message: "Invalid user"
             });
         }
-        console.log(userId)
-
         // Find the user in the database
         const userData = await userModel.findById(userId);
         if (!userData) {
@@ -157,14 +152,12 @@ const getCart = async (req, res) => {
                 message: "Cart is empty"
             });
         }
-           console.log(cartData)
         return res.status(200).json({
             success: true,
             message: "Cart data fetched successfully",
             cartData,
         });
     } catch (error) {
-        console.error("Error fetching cart data:", error);
         return res.status(500).json({
             success: false,
             message: "Internal server error",
