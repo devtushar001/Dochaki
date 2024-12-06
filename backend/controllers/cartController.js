@@ -130,7 +130,7 @@ const removeFromCart = async (req, res) => {
 // fetch user Cart Data 
 const getCart = async (req, res) => {
     try {
-        const userId = req.body.userID;
+        const userId = req.user.id;
 
         if (!userId) {
             return res.status(400).json({
@@ -138,6 +138,7 @@ const getCart = async (req, res) => {
                 message: "Invalid user"
             });
         }
+        console.log(userId)
 
         // Find the user in the database
         const userData = await userModel.findById(userId);
@@ -156,7 +157,7 @@ const getCart = async (req, res) => {
                 message: "Cart is empty"
             });
         }
-
+           console.log(cartData)
         return res.status(200).json({
             success: true,
             message: "Cart data fetched successfully",
