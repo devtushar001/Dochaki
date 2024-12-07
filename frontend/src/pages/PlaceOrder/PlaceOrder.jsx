@@ -40,22 +40,21 @@ const PlaceOrder = () => {
     return true;
   };
 
-  const handleSubmit = (e) => {
+  const placeOrder = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
-      toast.success("Form submitted successfully!");
-      console.log("Form Data:", data);
-      // Submit form data to the backend or proceed further
-    }
+    let orderItems = [];
+    bikeAccessories.map((item)=>{
+      if (cartItem[item._id]) {
+        let itemInfo = item;
+        itemInfo["quantity"] = cartItem[item._id];
+        orderItems.push(itemInfo);
+      }
+    })
   };
-
-  useEffect(() => {
-    console.log("Current Form Data:", data);
-  }, [data]);
 
   return (
     <>
-      <form className="place-order" onSubmit={handleSubmit}>
+      <form className="place-order" onSubmit={placeOrder}>
         <div className="place-order-left">
           <p className="title">Delivery Information</p>
           <div className="multi-fields">
