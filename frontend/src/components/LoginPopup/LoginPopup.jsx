@@ -29,7 +29,7 @@ const LoginPopup = ({ setShowLogin }) => {
             });
             const jsonResponse = await response.json();
 
-            if (!response.ok) {
+            if (!jsonResponse.success || !response.ok) {
                 toast.error(jsonResponse.message);
             } else if (jsonResponse.success) {
                 toast.success(jsonResponse.message);
@@ -38,11 +38,11 @@ const LoginPopup = ({ setShowLogin }) => {
                 localStorage.setItem("token", jsonResponse.token);
                 setShowLogin(false);
             }
+            setData({ name: "", email: "", password: "" });
         } catch (error) {
             toast.error(error);
         }
 
-        setData({ name: "", email: "", password: "" });
     };
 
     const handleSubmit = (e) => {

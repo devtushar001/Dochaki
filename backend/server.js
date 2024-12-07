@@ -7,6 +7,7 @@ import accessoryRouter from './routes/accessoryRoute.js';
 import userRouter from './routes/userRoute.js';
 import cartRouter from './routes/cartRoute.js';
 import { categoryRouter } from './routes/categoryRoute.js';
+import orderRouter from './routes/orderRoute.js';
 
 dotenv.config();
 
@@ -46,7 +47,8 @@ app.use('/api/category', categoryRouter);
 app.use('/catupload', express.static('catupload'));
 // http://localhost:8000/catupload//menu_image-1733413564680-877237691.jpeg image format
 
-
+// order router setup
+app.use('api/order', orderRouter)
 
 // running server on the port
 app.listen(port, () => {
