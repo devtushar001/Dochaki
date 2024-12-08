@@ -2,8 +2,8 @@ import orderModel from "../models/orderModel.js";
 import userModel from "../models/userModel.js";
 import Stripe from "stripe";
 
-const secret_key = process.env.STRIPE_SECRET_KEY;
-const stripe = new Stripe(secret_key);
+// const secret_key = process.env.STRIPE_SECRET_KEY;
+const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
 // Placing order for frontend
 const placeOrder = async (req, res) => {
@@ -105,5 +105,50 @@ const placeOrder = async (req, res) => {
         });
     }
 };
+
+// example code is below
+
+// import 'dotenv/config';
+// import express from 'express';
+// import Stripe from 'stripe';
+
+// const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
+// const app = express();
+
+// app.set('view engine', 'ejs');
+
+// app.get('/', (req, res) => {
+//   res.render('index.ejs');
+// });
+
+// app.post('/checkout', async (req, res) => {
+//   const session = await stripe.checkout.sessions.create({
+//     line_items: [{
+//       price_data: {
+//         currency: 'inr',
+//         product_data: {
+//           name: 'test purpose',
+//         },
+//         unit_amount: 50 * 100,
+//       },
+//       quantity: 1,
+//     }],
+//     mode: 'payment',
+//     success_url: `${process.env.BASE_URL}/complete`,
+//     cancel_url: `${process.env.BASE_URL}/cancel`,
+//   });
+//   res.redirect(session.url);
+// });
+
+// app.get('/complete', (req, res) => {
+//   res.send('Your payment was successful');
+// });
+
+// app.get('/cancel', (req, res) => {
+//   res.redirect('/');
+// });
+
+// app.listen(4000, () => console.log('Server started on port 4000'));
+
 
 export { placeOrder };
