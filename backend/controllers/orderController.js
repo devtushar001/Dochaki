@@ -3,109 +3,59 @@ import userModel from "../models/userModel.js";
 import Stripe from "stripe";
 
 const frontend_url = process.env.FRONTEND_URL;
-const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 const placeOrder = async (req, res) => {
-
     try {
-        const userId = req.user.id;
-        if (!userId) {
-            return res.status(401).json({
-                success: false,
-                message: "User not authenticated",
-            });
-        }
+        const userId = req.user?.id;
+        if (!userId) return res.status(401).json({ success: false, message: "User not authenticated" });
 
         const { items, amount, address } = req.body;
-        if (!items || !amount || !address) {
-            return res.status(400).json({
-                success: false,
-                message: "All fields are required",
-            });
-        }
+        if (!items || !amount || !address) 
+            return res.status(400).json({ success: false, message: "All fields are required" });
 
-        // Create new order
-        const newOrder = new orderModel({
-            userId,
-            items,
-            amount,
-            address,
-        });
+        const savedOrder = await new orderModel({ userId, items, amount, address }).save();
+        if (!savedOrder) throw new Error("Failed to save order");
 
-        const savedOrder = await newOrder.save();
-        if (!savedOrder) {
-            return res.status(500).json({
-                success: false,
-                message: "Failed to save order",
-            });
-        }
+        await userModel.findByIdAndUpdate(userId, { cartData: {} }, { new: true });
 
-        // Update user cart
-        const updatedUserCart = await userModel.findByIdAndUpdate(
-            userId,
-            { cartData: {} },
-            { new: true } // Returns updated document
-        );
-
-        if (!updatedUserCart) {
-            return res.status(404).json({
-                success: false,
-                message: "User not found or cart update failed",
-            });
-        }
-
-        // Prepare line items for Stripe Checkout
-        // items.map((newItem, i)=>{
-        //   console.log(`${i} ${newItem.price.newPrice}`)
-        //   console.log(`${i} ${newItem.name}`)
-        // });
-        
-        const line_items = items.map((item) => ({
-            price_data: {
-                currency: "inr",
-                product_data: { name: item.name },
-                unit_amount: item.price.newPrice * 100, // Convert to paise
+        const line_items = [
+            ...items.map(({ name, price, quantity }) => ({
+                price_data: {
+                    currency: "inr",
+                    product_data: { name },
+                    unit_amount: price.newPrice * 100,
+                },
+                quantity,
+            })),
+            {
+                price_data: {
+                    currency: "inr",
+                    product_data: { name: "Delivery Charges" },
+                    unit_amount: 15 * 100,
+                },
+                quantity: 1,
             },
-            quantity: item.quantity,
-        }));
+        ];
 
-        // Add delivery charges as a line item
-        line_items.push({
-            price_data: {
-                currency: "inr",
-                product_data: { name: "Delivery Charges" },
-                unit_amount: Math.round(0.15 * 100), // Example fixed charge in INR
-            },
-            quantity: 1,
-        });
-
-        // console.log(line_items)
-
-        // Create Stripe Checkout Session
         const session = await stripe.checkout.sessions.create({
-            line_items: line_items, // Corrected typo
+            line_items,
             mode: "payment",
             success_url: `${frontend_url}/verify?success=true&orderId=${savedOrder._id}`,
             cancel_url: `${frontend_url}/verify?success=false&orderId=${savedOrder._id}`,
         });
 
-        if (!session) {
-            return res.status(500).json({
-                success: false,
-                message: "Failed to create payment session",
-            });
-        }
+        if (!session) throw new Error("Failed to create payment session");
 
-        return res.status(200).json({
+        res.status(200).json({
             success: true,
             message: "Payment session created successfully",
             session_url: session.url,
         });
     } catch (error) {
-        return res.status(500).json({
+        res.status(500).json({
             success: false,
-            message: "Internal Server Error",
-            error: error.message,
+            message: error.message || "Internal Server Error",
         });
     }
 };
