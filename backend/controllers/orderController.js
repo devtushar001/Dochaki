@@ -31,8 +31,8 @@ const placeOrder = async (req, res) => {
             {
                 price_data: {
                     currency: "inr",
-                    product_data: { name: "Delivery Charges" },
-                    unit_amount: 15 * 100,
+                    product_data: { name: "Including shipping fee and GST" },
+                    unit_amount: 0 * 100,
                 },
                 quantity: 1,
             },
