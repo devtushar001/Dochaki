@@ -48,7 +48,7 @@ app.use('/catupload', express.static('catupload'));
 // http://localhost:8000/catupload//menu_image-1733413564680-877237691.jpeg image format
 
 // order router setup
-app.use('api/order', orderRouter)
+app.use('/api/order', orderRouter);
 
 // running server on the port
 app.listen(port, () => {

@@ -2,12 +2,10 @@ import orderModel from "../models/orderModel.js";
 import userModel from "../models/userModel.js";
 import Stripe from "stripe";
 
-const secret_key = process.env.STRIPE_SECRET_KEY;
-const stripe = new Stripe(secret_key);
+const frontend_url = process.env.FRONTEND_URL;
+const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
-// Placing order for frontend
 const placeOrder = async (req, res) => {
-    const frontend_url = "http://localhost:5173"; // Frontend URL for redirection
 
     try {
         const userId = req.user.id;
@@ -57,11 +55,16 @@ const placeOrder = async (req, res) => {
         }
 
         // Prepare line items for Stripe Checkout
+        // items.map((newItem, i)=>{
+        //   console.log(`${i} ${newItem.price.newPrice}`)
+        //   console.log(`${i} ${newItem.name}`)
+        // });
+        
         const line_items = items.map((item) => ({
             price_data: {
                 currency: "inr",
                 product_data: { name: item.name },
-                unit_amount: item.price * 100, // Convert to paise
+                unit_amount: item.price.newPrice * 100, // Convert to paise
             },
             quantity: item.quantity,
         }));
@@ -75,6 +78,8 @@ const placeOrder = async (req, res) => {
             },
             quantity: 1,
         });
+
+        // console.log(line_items)
 
         // Create Stripe Checkout Session
         const session = await stripe.checkout.sessions.create({
@@ -97,7 +102,6 @@ const placeOrder = async (req, res) => {
             session_url: session.url,
         });
     } catch (error) {
-        console.error("Error in placeOrder:", error);
         return res.status(500).json({
             success: false,
             message: "Internal Server Error",

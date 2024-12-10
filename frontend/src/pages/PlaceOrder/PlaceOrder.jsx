@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 
 const PlaceOrder = () => {
   const { getTotalCartAmount, token, bikeAccessories, cartItem, url } = useContext(DochakiContext);
-  
+
   const [data, setData] = useState({
     firstName: "",
     lastName: "",
@@ -42,15 +42,50 @@ const PlaceOrder = () => {
 
   const placeOrder = async (e) => {
     e.preventDefault();
-    let orderItems = [];
-    bikeAccessories.map((item)=>{
-      if (cartItem[item._id]) {
-        let itemInfo = item;
-        itemInfo["quantity"] = cartItem[item._id];
-        orderItems.push(itemInfo);
+    if (!validateForm()) return;
+    const orderItems = bikeAccessories
+      .filter((item) => cartItem[item._id])
+      .map((item) => ({
+        ...item,
+        quantity: cartItem[item._id],
+      }));
+
+    if (orderItems.length === 0) {
+      toast.error("Your cart is empty. Please add items to proceed.");
+      return;
+    }
+
+    const orderData = {
+      address: data, // Validate 'data' before using
+      items: orderItems,
+      amount: getTotalCartAmount() * 1.15, // Adjust multiplier as needed
+    };
+
+    const newOrderData = JSON.stringify(orderData, null, 2);
+    try {
+      const response = await fetch("http://localhost:8000/api/order/place", {
+        method: "POST", // Specify the HTTP method
+        headers: {
+          "Content-Type": "application/json", // Specify JSON content type
+          Authorization: `Bearer ${token}`, // Add the Authorization header with the token
+        },
+        body: newOrderData, // Convert the orderData object to a JSON string
+      });
+      const result = await response.json();
+      console.log(result)
+      if (!response.success) {
+        toast.error("Something got error");
       }
-    })
+      const { session_url } = result;
+      window.location.replace(session_url);
+
+    } catch (error) {
+      toast.error(error)
+    }
+
   };
+
+
 
   return (
     <>
