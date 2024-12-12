@@ -4,6 +4,7 @@ const isAuth = async (req, res, next) => {
     try {
         // Extract token from the Authorization header
         const authHeader = req.headers.authorization;
+        
         if (!authHeader || !authHeader.startsWith("Bearer ")) {
             return res.json({
                 success: false,

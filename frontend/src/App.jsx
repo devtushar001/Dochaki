@@ -11,6 +11,7 @@ import AboutUs from "./pages/AboutUs/AboutUs";
 import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Verify from "./pages/Verify/Verify";
 
 const App = () => {
    const [showLogin, setShowLogin] = useState(false);
@@ -27,6 +28,7 @@ const App = () => {
                <Route path="/accessory/:id" element={<Accessory />} />
                <Route path="/about-us" element={<AboutUs/>} />
                <Route path="/privacy-policy" element={<PrivacyPolicy/>} />
+               <Route path="/verify" element={<Verify/>} />
             </Routes>
          </div>
          <Footer />

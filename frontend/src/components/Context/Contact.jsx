@@ -127,7 +127,6 @@ const DochakiContextProvider = (props) => {
     // Load cart data
     const loadCartData = async () => {
         if (!token) return;
-
         try {
             const response = await fetch(`${url}/api/cart/get`, {
                 method: "GET",
@@ -138,7 +137,6 @@ const DochakiContextProvider = (props) => {
             });
 
             const result = await response.json();
-            // setCartItem(result.cart)
             if (response.ok && result.success) {
                 setCartItem(result.cartData); // Assuming `cartData` is the object with item quantities
                 // setCartItem(result.cartData)

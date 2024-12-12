@@ -11,11 +11,11 @@ const placeOrder = async (req, res) => {
         if (!userId) return res.status(401).json({ success: false, message: "User not authenticated" });
 
         const { items, amount, address } = req.body;
-        if (!items || !amount || !address) 
+        if (!items || !amount || !address)
             return res.status(400).json({ success: false, message: "All fields are required" });
 
         const savedOrder = await new orderModel({ userId, items, amount, address }).save();
-        if (!savedOrder) throw new Error("Failed to save order");
+        if (!savedOrder) return res.json({ success: false, message: "Failed to save order" });
 
         await userModel.findByIdAndUpdate(userId, { cartData: {} }, { new: true });
 
@@ -45,7 +45,7 @@ const placeOrder = async (req, res) => {
             cancel_url: `${frontend_url}/verify?success=false&orderId=${savedOrder._id}`,
         });
 
-        if (!session) throw new Error("Failed to create payment session");
+        if (!session) return res.json({ success: false, message: "Failed to create payment session" });
 
         res.status(200).json({
             success: true,
@@ -60,4 +60,32 @@ const placeOrder = async (req, res) => {
     }
 };
 
-export { placeOrder };
+const verifyOrder = async (req, res) => {
+    console.log(req+" req")
+    const { orderId, success } = req.body;
+    try {
+        if (!(success == "true")) {
+            await orderModel.findByIdAndDelete(orderId)
+            return res.json({
+                success: false,
+                message: "Payment failed or something got problem"
+            })
+        } else {
+            await orderModel.findByIdAndUpdate(orderId, { payment: true })
+            return res.json({
+                success: true,
+                message: "Payment successful"
+            })
+        }
+    } catch (error) {
+        return res.json({
+            success: false,
+            message: "Api error"+error
+        })
+    }
+};
+
+
+
+
+export { placeOrder, verifyOrder };

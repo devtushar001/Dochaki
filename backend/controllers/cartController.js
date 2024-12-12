@@ -146,12 +146,12 @@ const getCart = async (req, res) => {
 
         // Retrieve the cart data
         const cartData = userData.cartData || {};
-        if (!Object.keys(cartData).length) {
-            return res.status(404).json({
-                success: false,
-                message: "Cart is empty"
-            });
-        }
+        // if (!Object.keys(cartData).length) {
+        //     return res.status(404).json({
+        //         success: false,
+        //         message: "Cart is empty"
+        //     });
+        // }
         return res.status(200).json({
             success: true,
             message: "Cart data fetched successfully",
