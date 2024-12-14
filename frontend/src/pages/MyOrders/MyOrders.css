@@ -1,0 +1,52 @@
+.my-orders {
+    margin-top: 120px;
+    margin: 120px 0px 0px 0px;
+}
+
+.my-orders .container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.my-orders-order {
+    padding: 10px 20px;
+    display: grid;
+    grid-template-columns: 0.5fr 2fr 1fr 1fr 2fr 1fr;
+    align-items: center;
+    gap: 30px;
+    font-size: 14px;
+    color: #454545;
+    border: 1px solid rgb(0, 112, 168);
+}
+
+#money {
+    color: #00be23;
+    background-color: rgba(0, 128, 0, 0.133);
+    backdrop-filter: blur(20px);
+    border-radius: 1px;
+    padding: 7px 17px;
+}
+
+.my-orders-order img {
+    width: 50px;
+}
+
+.my-orders-order p span {
+    color: rgb(0, 112, 168);
+}
+
+.my-orders-order p b {
+    font-weight: 500;
+    color: #454545;
+}
+
+.my-orders-order button {
+    bottom: none;
+    padding: 12px 0px;
+    border-radius: 4px;
+    background-color: #ffe1e1e1;
+    cursor: pointer;
+    color: #454545;
+    border: none;
+}

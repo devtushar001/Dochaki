@@ -37,7 +37,7 @@ const Verify = () => {
             // Handle the result as needed
             if (result.success) {
                 toast.success(result.message || "Order verified successfully!");
-                navigate("/myorder");
+                navigate("/myorders");
             } else {
                 toast.error(result.message || "Order verification failed.");
                 navigate("/")

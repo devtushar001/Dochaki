@@ -61,7 +61,7 @@ const placeOrder = async (req, res) => {
 };
 
 const verifyOrder = async (req, res) => {
-    console.log(req+" req")
+    console.log(req + " req")
     const { orderId, success } = req.body;
     try {
         if (!(success == "true")) {
@@ -80,12 +80,108 @@ const verifyOrder = async (req, res) => {
     } catch (error) {
         return res.json({
             success: false,
-            message: "Api error"+error
+            message: "Api error" + error
         })
     }
 };
 
+// user orders for frontend
+const userOrder = async (req, res) => {
+    const userId = req.user.id;
+    try {
+        if (!userId) {
+            return res.json({
+                success: false,
+                message: "User not authenticated"
+            })
+        }
+        const orders = await orderModel.find({ userId });
+        if (!orders) {
+            return res.json({
+                success: false,
+                message: "Orders not found"
+            })
+        }
+
+        return res.json({
+            success: true,
+            message: "Orders fetched successfully",
+            orders
+        })
+    } catch (error) {
+        console.log(error)
+        return res.json({
+            success: false,
+            message: error
+        })
+    }
+}
+
+const listOrders = async (req, res) => {
+    try {
+        const orders = await orderModel.find({});
+
+        if (!orders.length) {
+            return res.status(404).json({
+                success: false,
+                message: "No orders found"
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: "Orders fetched successfully",
+            orders
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "API error",
+            error: error.message
+        });
+    }
+};
 
 
+// api for update order status
 
-export { placeOrder, verifyOrder };
+const updateStatus = async (req, res) => {
+    try {
+      const { orderId, status } = req.body;
+  
+      // Validate request body
+      if (!orderId || !status) {
+        return res.status(400).json({
+          success: false,
+          message: "Order ID and status are required"
+        });
+      }
+  
+      // Update order status
+      const updatedOrder = await orderModel.findByIdAndUpdate(orderId, { status }, { new: true });
+  
+      if (!updatedOrder) {
+        return res.status(404).json({
+          success: false,
+          message: "Order not found"
+        });
+      }
+  
+      return res.status(200).json({
+        success: true,
+        message: "Order updated successfully",
+        order: updatedOrder
+      });
+    } catch (error) {
+        console.log(error)
+      return res.status(500).json({
+        success: false,
+        message: "API error",
+        error: error.message
+      });
+    }
+  };
+  
+
+
+export { placeOrder, verifyOrder, userOrder, listOrders, updateStatus };

@@ -42,7 +42,7 @@ const Navbar = (props) => {
                     {!token ? <button onClick={() => { setShowLogin(true) }}>Sign Up</button> : <div className="navbar-profile">
                         <img src={fassets.profile_icon} alt="" />
                         <ul className="nav-profile-dropdown">
-                            <li><img src={fassets.bag_icon} alt="" /><p>Orders</p></li>
+                            <li onClick={()=>navigate("/myorders")} ><img src={fassets.bag_icon} alt="" /><p>Orders</p></li>
                             <hr />
                             <li onClick={logout} ><img src={fassets.logout_icon} alt="" /> <p>Logout</p></li>
                         </ul>
