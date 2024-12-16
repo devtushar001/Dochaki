@@ -101,6 +101,8 @@ const Add = ({ url }) => {
     toast.success(response.data.success);
   };
 
+  
+
   useEffect(() => {
     // Function to fetch categories
     const fetchCategories = async () => {

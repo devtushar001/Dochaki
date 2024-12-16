@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
-import {toast} from "react-toastify"
+import React, { useState, useEffect } from 'react';
+import './Panel.css'
+import { toast } from "react-toastify";
+import { fassets } from "../../../../frontend/src/frontend_assets/assets"
 
-const CreateCategory = () => {
+const CreateCategory = ({ url }) => {
     const [menuName, setMenuName] = useState('');
     const [menuImage, setMenuImage] = useState(null);
     const [responseMessage, setResponseMessage] = useState('');
+    const [categories, setCategories] = useState([]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -43,27 +46,92 @@ const CreateCategory = () => {
         setMenuImage(e.target.files[0]);
     };
 
+    useEffect(() => {
+        // Function to fetch categories
+        const fetchCategories = async () => {
+            try {
+                const response = await fetch(`${url}/api/category/get`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const data = await response.json();
+                setCategories(data.categories); // Assuming response data is an array
+            } catch (err) {
+                console.error("Error fetching categories:", err);
+                setError(err.message);
+            }
+        };
+
+        fetchCategories();
+    }, []); // Empty dependency array ensures it runs only once
+
+
+
+
+
+
     return (
-        <div>
-            <h1>Create Category</h1>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Menu Name:</label>
-                    <input
-                        type="text"
-                        value={menuName}
-                        onChange={(e) => setMenuName(e.target.value)}
-                        placeholder="Enter menu name"
-                    />
+        <>
+            <div className="panel-container">
+                {/* Create Category Section */}
+                <div className="create-category">
+                    <h1>Create Category</h1>
+                    <form onSubmit={handleSubmit} className="create-category-form">
+                        <div className="form-group">
+                            <label htmlFor="menuName">Menu Name:</label>
+                            <input
+                                type="text"
+                                id="menuName"
+                                value={menuName}
+                                onChange={(e) => setMenuName(e.target.value)}
+                                placeholder="Enter menu name"
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="menuImage">Menu Image:</label>
+                            <input
+                                type="file"
+                                id="menuImage"
+                                onChange={handleFileChange}
+                                required
+                            />
+                        </div>
+                        <button type="submit" className="submit-btn">
+                            Create Category
+                        </button>
+                    </form>
+                    {responseMessage && (
+                        <p className={`response-message ${responseMessage.startsWith("Error") ? "error" : "success"}`}>
+                            {responseMessage}
+                        </p>
+                    )}
                 </div>
-                <div>
-                    <label>Menu Image:</label>
-                    <input type="file" onChange={handleFileChange} />
+
+                {/* Update Categories Section */}
+                <div className="update-categories">
+                    <h2>Update Categories</h2>
+                    <div id="options">
+                        {categories.map((category, i) => (
+                            <div className="category-item" key={i}>
+                                <img
+                                    src={`${url}/${category.menu_image}`}
+                                    alt="Category"
+                                    className="category-image"
+                                />
+                                <p className="category-name">{category.menu_name}</p>
+                                <img
+                                    src={fassets.cross_icon}
+                                    alt="Delete"
+                                    className="delete-icon"
+                                />
+                            </div>
+                        ))}
+                    </div>
                 </div>
-                <button type="submit">Create Category</button>
-            </form>
-            {responseMessage && <p>{responseMessage}</p>}
-        </div>
+            </div>
+
+        </>
     );
 };
 
