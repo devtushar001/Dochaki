@@ -5,9 +5,12 @@ import { DochakiContext } from "../../components/Context/Contact";
 
 const MyOrder = () => {
     const { url, token } = useContext(DochakiContext);
-    const [data, setData] = useState([]);
+    const [orders, setOrders] = useState([]);
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     const myOrders = async () => {
+        setLoading(true);
         try {
             const response = await fetch(`${url}/api/order/myorders`, {
                 method: "GET",
@@ -23,52 +26,57 @@ const MyOrder = () => {
 
             const result = await response.json();
             if (result.success) {
-                setData(result.orders); // Update based on actual API structure
+                setOrders(result.orders);
             } else {
                 setError("No orders found or request unsuccessful.");
             }
         } catch (error) {
             setError(error.message);
+        } finally {
+            setLoading(false);
         }
     };
 
     useEffect(() => {
-        if (token) {
+        if (token && url) {
             myOrders();
         }
-    }, [token]); // Call myOrders when the component mounts
+        window.scrollTo(0, 0);
+    }, [token, url]);
 
     return (
-        <>
-            <div className="my-orders">
-                <h2>My Orders</h2><div className="container">
-                    {data.map((order, i) => {
-                        console.log(order)
-                        return (
-                            <>
-                                <div key={i} className="my-orders-order">
-                                    <img src={fassets.parcel_icon} alt="" />
-                                    <p>
-                                        {order.items.map((item, index) => {
-                                            if (index === order.items.length - 1) {
-                                                return item.name + " x " + item.quantity;
-                                            } else {
-                                                return item.name + " x " + item.quantity + ",";
-                                            }
-                                        })}
-                                    </p>
-                                    <p id="money"> 
-                                      &#8377;  {Math.round(order.amount)}.00 </p>
-                                    <p>Items: {order.items.length}</p>
-                                    <p><span>&#x25cf;</span><b> {order.status}</b></p>
-                                    <button>Track Order</button>
-                                </div>
-                            </>
-                        )
-                    })}
+        <div className="my-orders">
+            <h2>My Orders</h2>
+            {loading ? (
+                <div>Loading...</div>
+            ) : error ? (
+                <div className="error">{error}</div>
+            ) : (
+                <div className="container">
+                    {orders.map((order, i) => (
+                        <div key={i} className="my-orders-order">
+                            <img src={fassets.parcel_icon} alt="" />
+                            <p>
+                                {order?.items?.map((item, index) => {
+                                    if (index === order.items.length - 1) {
+                                        return item.name + " x " + item.quantity;
+                                    } else {
+                                        return item.name + " x " + item.quantity + ",";
+                                    }
+                                })}
+                            </p>
+                            <p id={order.payment ? "money": "fail"}>&#8377; {Math.round(order.amount)}.00</p>
+                            <p>Items: {order.items.length}</p>
+                            <p>
+                                <span>&#x25cf;</span>
+                                <b> {order.status}</b>
+                            </p>
+                            <button onClick={myOrders}>Track Order</button>
+                        </div>
+                    ))}
                 </div>
-            </div>
-        </>
+            )}
+        </div>
     );
 };
 

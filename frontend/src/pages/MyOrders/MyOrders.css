@@ -10,9 +10,10 @@
 }
 
 .my-orders-order {
-    padding: 10px 20px;
+    margin: 40px;
+    padding: 30px;
     display: grid;
-    grid-template-columns: 0.5fr 2fr 1fr 1fr 2fr 1fr;
+    grid-template-columns: 0.3fr 1.5fr 1fr 0.7fr 1fr 1fr;
     align-items: center;
     gap: 30px;
     font-size: 14px;
@@ -20,12 +21,21 @@
     border: 1px solid rgb(0, 112, 168);
 }
 
-#money {
-    color: #00be23;
-    background-color: rgba(0, 128, 0, 0.133);
+#money,
+#fail {
     backdrop-filter: blur(20px);
     border-radius: 1px;
     padding: 7px 17px;
+}
+
+#money {
+    color: #00be23;
+    background-color: rgba(0, 128, 0, 0.133);
+}
+
+#fail {
+  color: #de0000;
+  background-color: #ff000038;
 }
 
 .my-orders-order img {
