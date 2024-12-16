@@ -183,5 +183,46 @@ const updateStatus = async (req, res) => {
   };
   
 
+  const deleteOrder = async (req, res) => {
+    const { orderId } = req.body; // Destructure to get orderId from request body
+  
+    // Check if orderId is provided
+    if (!orderId) {
+      return res.status(400).json({
+        success: false,
+        message: "Order ID is required."
+      });
+    }
+  
+    try {
+      // Attempt to delete the order
+      const deletedOrder = await orderModel.findByIdAndDelete(orderId);
+  
+      // If no order is found
+      if (!deletedOrder) {
+        return res.status(404).json({
+          success: false,
+          message: "Order not found."
+        });
+      }
+  
+      // Success response
+      return res.status(200).json({
+        success: true,
+        message: "Order deleted successfully.",
+        data: deletedOrder,
+      });
+  
+    } catch (error) {
+      // Handle errors
+      return res.status(500).json({
+        success: false,
+        message: "An error occurred while deleting the order.",
+        error: error.message
+      });
+    }
+  };
+  
 
-export { placeOrder, verifyOrder, userOrder, listOrders, updateStatus };
+
+export { placeOrder, verifyOrder, userOrder, listOrders, updateStatus, deleteOrder };

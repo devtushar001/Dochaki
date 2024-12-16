@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import './PlaceOrder.css';
 import { useContext } from "react";
 import { DochakiContext } from "../../components/Context/Contact";
@@ -87,10 +87,11 @@ const PlaceOrder = () => {
 
   };
 
-useEffect(()=> {
-    if(!token) navigate("/cart")
-    else if(getTotalCartAmount() === 0 ) navigate("/cart")
-},[token])
+  useEffect(() => {
+    window.scrollTo(0, document.body.scrollHeight);
+    if (!token) navigate("/cart")
+    else if (getTotalCartAmount() === 0) navigate("/cart")
+  }, [token])
 
   return (
     <>

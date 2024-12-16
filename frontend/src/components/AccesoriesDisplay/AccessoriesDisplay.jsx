@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import AccessoriesItem from "../AcceesoriesItem/AccessoriesItem";
 import { DochakiContext } from "../Context/Contact";
 import './AccessoriesDisplay.css'
@@ -6,6 +6,9 @@ import './AccessoriesDisplay.css'
 const AccessoriesDisplay = ({ category }) => {
     const { bikeAccessories } = useContext(DochakiContext);
       
+    useEffect(()=>{
+        window.scrollTo(0, 0);
+    },[])
     return (
         <>
             <div className="accessories-display" id="accessories-display">

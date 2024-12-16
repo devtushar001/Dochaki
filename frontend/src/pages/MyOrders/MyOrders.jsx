@@ -36,12 +36,12 @@ const MyOrder = () => {
             setLoading(false);
         }
     };
-
+    
     useEffect(() => {
+        window.scrollTo(0, 0);
         if (token && url) {
             myOrders();
         }
-        window.scrollTo(0, 0);
     }, [token, url]);
 
     return (

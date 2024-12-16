@@ -51,6 +51,7 @@ const Verify = () => {
 
 
     useEffect(() => {
+        window.scrollTo(0, 0);
         verifyOrder();
     }, [url, success, orderId, navigate]);
 

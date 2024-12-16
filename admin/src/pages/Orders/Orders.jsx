@@ -7,6 +7,7 @@ const Orders = ({ url }) => {
   const [orders, setOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  // Fetch the list of orders
   const orderList = async () => {
     try {
       setIsLoading(true);
@@ -37,9 +38,39 @@ const Orders = ({ url }) => {
     }
   };
 
+  // Delete an order
+  const deleteOrder = async (orderId) => {
+    try {
+      const response = await fetch(`${url}/api/order/delete`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ orderId }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const result = await response.json();
+
+      if (result.success) {
+        toast.success(result.message || "Order deleted successfully.");
+        setOrders((prevOrders) =>
+          prevOrders.filter((order) => order._id !== orderId)
+        );
+      } else {
+        toast.error(result.message || "Failed to delete order.");
+      }
+    } catch (error) {
+      toast.error(error.message || "An error occurred while deleting the order.");
+    }
+  };
+
+  // Update the status of an order
   const statusHandler = async (event, orderId) => {
     const newStatus = event.target.value;
-    console.log(newStatus, orderId)
     try {
       const response = await fetch(`${url}/api/order/status`, {
         method: "POST",
@@ -70,7 +101,9 @@ const Orders = ({ url }) => {
     }
   };
 
+  // Fetch orders on component mount
   useEffect(() => {
+    window.scrollTo(0, 0);
     orderList();
   }, []);
 
@@ -89,38 +122,33 @@ const Orders = ({ url }) => {
               <img src={fassets.parcel_icon} alt="Order Icon" />
               <div>
                 <p className="order-item-accessory">
-                  {order.items.map((item, i) =>
-                    `${item.name} x ${item.quantity}${
-                      i < order.items.length - 1 ? ", " : ""
-                    }`
-                  )}
+                  {order.items
+                    .map(
+                      (item, i) =>
+                        `${item.name} x ${item.quantity}${
+                          i < order.items.length - 1 ? ", " : ""
+                        }`
+                    )
+                    .join("")}
                 </p>
                 <p className="order-item-name">
                   {order.address?.firstName} {order.address?.lastName}
                 </p>
                 <div className="order-item-address">
                   <p>
-                    {order.address?.street},{" "}
-                    {order.address?.city},{" "}
-                    {order.address?.state},{" "}
-                    {order.address?.country},{" "}
+                    {order.address?.street}, {order.address?.city},{" "}
+                    {order.address?.state}, {order.address?.country},{" "}
                     {order.address?.zipcode}
                   </p>
                 </div>
                 <p className="order-item-phone">{order.address?.phone}</p>
               </div>
               <p>Items: {order.items.length}</p>
-              <p
-                className={
-                  order.payment ? "success" : "fail"
-                }
-              >
+              <p className={order.payment ? "success" : "fail"}>
                 &#8377;{Math.round(order.amount)}.00
               </p>
               <select
-                onChange={(event) => {
-                  statusHandler(event, order._id);
-                }}
+                onChange={(event) => statusHandler(event, order._id)}
                 value={order.status}
               >
                 <option value="Processing">Processing</option>
@@ -129,6 +157,12 @@ const Orders = ({ url }) => {
                 <option value="Out For Delivery">Out For Delivery</option>
                 <option value="Delivered">Delivered</option>
               </select>
+              <button
+                onClick={() => deleteOrder(order._id)}
+                className="delete-button"
+              >
+                X
+              </button>
             </div>
           ))
         )}

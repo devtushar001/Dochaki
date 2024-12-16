@@ -17,6 +17,7 @@ console.log(price)
         const timer = setTimeout(() => {
             setAnimationClass(''); // Remove the animation class after it completes
         }, 500); // Time should match with animation duration
+        window.scrollTo(0, 0);
         return () => clearTimeout(timer);
     }, [mainImage]);
 
