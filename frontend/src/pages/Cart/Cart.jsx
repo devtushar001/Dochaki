@@ -2,10 +2,15 @@ import React, { useContext } from "react";
 import './Cart.css';
 import { Link, useNavigate } from 'react-router-dom'
 import { DochakiContext } from "../../components/Context/Contact";
+import { useEffect } from "react";
 
 const Cart = () => {
     const { cartItem, bikeAccessories, removeFromCart, getTotalCartAmount, url } = useContext(DochakiContext);
     const navigate = useNavigate();
+
+    useEffect(()=>{
+        window.scrollTo(0, 0);
+    }, [])
     return (
         <>
             <div className="cart">
