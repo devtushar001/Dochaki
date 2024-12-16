@@ -1,68 +1,106 @@
 /* AboutUs.css */
-
 .about-us-container {
-    margin-top: 140px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    background-color: #f8f9fa;
-  }
-  
-  .about-us-content {
-    max-width: 800px;
-    background: #ffffff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .about-us-title {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-  
-  .about-us-description {
-    font-size: 1rem;
-    color: #555;
-    line-height: 1.6;
-    margin-bottom: 15px;
-    text-align: justify;
-  }
-  
-  /* Responsive Styles */
-  @media (max-width: 768px) {
-    .about-us-title {
-      font-size: 2rem;
-    }
-  
-    .about-us-description {
-      font-size: 0.9rem;
-    }
-  
-    .about-us-content {
-      padding: 15px;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .about-us-title {
-      font-size: 1.5rem;
-    }
-  
-    .about-us-description {
-      font-size: 0.8rem;
-    }
-  
-    .about-us-container {
-      padding: 10px;
-    }
-  
-    .about-us-content {
-      padding: 10px;
-    }
-  }
-  
+  margin-top: 120px;
+  font-family: 'Arial', sans-serif;
+  padding: 40px;
+  /* background-color: #f4f4f4; */
+}
+
+.about-us-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.about-us-header h1 {
+  font-size: 36px;
+  color: #333;
+}
+
+.about-us-header p {
+  font-size: 18px;
+  color: #555;
+}
+
+.about-us-intro {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 40px;
+}
+
+.about-us-text h2 {
+  font-size: 30px;
+  border-bottom: 1px solid rgb(0, 92, 153);
+  padding: 20px 0px;
+  color: #333;
+}
+
+.about-us-text p {
+  margin-top: 20px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #666;
+}
+
+.about-us-image img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.about-us-services {
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.about-us-services h2 {
+  font-size: 30px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.service-card {
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.service-card h3 {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.service-card p {
+  font-size: 16px;
+  color: #666;
+}
+
+.about-us-brands {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.about-us-brands h2 {
+  font-size: 30px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.brands-logos img {
+  margin: 0 15px;
+  width: 120px;
+}
+
+.about-us-footer {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 18px;
+  color: #333;
+}

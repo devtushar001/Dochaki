@@ -6,6 +6,10 @@
     scroll-behavior: smooth;
 }
 
+Link {
+    text-decoration: none;
+}
+
 body {
     min-height: 100vh;
 }

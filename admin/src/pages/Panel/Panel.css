@@ -55,7 +55,7 @@
   
   .submit-btn {
     padding: 12px;
-    background-color: #007bff;
+    background-color: #000000;
     color: white;
     font-size: 16px;
     border: none;
@@ -65,7 +65,7 @@
   }
   
   .submit-btn:hover {
-    background-color: #0056b3;
+    background-color: #000000;
   }
   
   .response-message {

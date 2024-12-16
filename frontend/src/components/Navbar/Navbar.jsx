@@ -18,9 +18,9 @@ const Navbar = (props) => {
 
     const logout = () => {
         localStorage.removeItem("token");
-         setToken("");
-         navigate("/")
-         window.location.reload();
+        setToken("");
+        navigate("/")
+        window.location.reload();
     }
 
     return (
@@ -28,10 +28,10 @@ const Navbar = (props) => {
             <div className="navbar">
                 <Link to="/"><img src={assets.logo_blur} alt="" className="logo" onClick={reloadPage} /></Link>
                 <ul className="navbar-menu">
-                    <li className={menu === "home" ? "active" : ""} onClick={() => { setMenu("home") }}>home</li>
-                    <li className={menu === "menu" ? "active" : ""} onClick={() => { setMenu("menu") }}>menu</li>
-                    <li className={menu === "mobile-app" ? "active" : ""} onClick={() => { setMenu("mobile-app") }}>mobile-app</li>
-                    <li className={menu === "contact-us" ? "active" : ""} onClick={() => { setMenu("contact-us") }}>contact us</li>
+                    <Link to="/"> <li className={menu === "home" ? "active" : ""} onClick={() => { setMenu("home") }}>home</li></Link>
+                    <Link to='/about-us'> <li className={menu === "about-us" ? "active" : ""} onClick={() => { setMenu("about-us") }}>about-us</li></Link>
+                    <Link to='/shop'> <li className={menu === "shop" ? "active" : ""} onClick={() => { setMenu("shop") }}>shop</li></Link>
+                    <Link to='/contact-us'> <li className={menu === "contact-us" ? "active" : ""} onClick={() => { setMenu("contact-us") }}>contact us</li></Link>
                 </ul>
                 <div className="navbar-right">
                     <img src={fassets.search_icon} alt="" />
@@ -42,7 +42,7 @@ const Navbar = (props) => {
                     {!token ? <button onClick={() => { setShowLogin(true) }}>Sign Up</button> : <div className="navbar-profile">
                         <img src={fassets.profile_icon} alt="" />
                         <ul className="nav-profile-dropdown">
-                            <li onClick={()=>navigate("/myorders")} ><img src={fassets.bag_icon} alt="" /><p>Orders</p></li>
+                            <li onClick={() => navigate("/myorders")} ><img src={fassets.bag_icon} alt="" /><p>Orders</p></li>
                             <hr />
                             <li onClick={logout} ><img src={fassets.logout_icon} alt="" /> <p>Logout</p></li>
                         </ul>

@@ -5,6 +5,14 @@ import './Footer.css'
 import { Link } from "react-router-dom";
 
 const Footer = () => {
+
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'smooth',  // Adds smooth scrolling animation
+        });
+    }
     return (
         <>
             <div className="footer" id="footer">
@@ -19,10 +27,10 @@ const Footer = () => {
                     <div className="footer-content-center">
                          <h2>COMPANY</h2>
                          <ul>
-                           <Link to='/'><li>Home</li></Link> 
-                            <Link to='/about-us'><li>About Us</li></Link> 
-                            <li>Delivery</li>
-                            <Link to='/privacy-policy'><li>Privecy Policy</li></Link>
+                           <Link to='/'><li onClick={scrollToTop}>Home</li></Link> 
+                            <Link to='/about-us'><li onClick={scrollToTop}>About Us</li></Link> 
+                            <Link to='/myorders'> <li onClick={scrollToTop}>Delivery</li></Link>
+                            <Link to='/privacy-policy'><li onClick={scrollToTop}>Privecy Policy</li></Link>
                          </ul>
                     </div>
                     <div className="footer-content-right">
