@@ -53,4 +53,27 @@ const addCategory = async (req, res) => {
     }
 };
 
-export default addCategory;
+
+// Backend Controller Function for Fetching Categories
+const getAllCategories = async (req, res) => {
+    try {
+        // Replace with your actual database query or ORM call
+        const categories = await categoryModel.find(); // For MongoDB with Mongoose
+        // Example SQL query: const categories = await db.query('SELECT * FROM categories');
+        if (!categories) return res.status(501).json({ success: false, message: "Categories not found"})
+         return res.status(200).json({
+            success: true,
+            categories,
+        });
+    } catch (error) {
+        console.error('Error fetching categories:', error);
+         return res.status(500).json({
+            success: false,
+            message: 'Failed to fetch categories',
+        });
+    }
+};
+
+
+
+export  {addCategory, getAllCategories};

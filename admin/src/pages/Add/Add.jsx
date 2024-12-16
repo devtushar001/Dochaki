@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import './Add.css';
 import nav_icon from "../../assets/db";
 import { toast } from "react-toastify";
 
 const Add = ({ url }) => {
-
+  const [categories, setCategories] = useState([]);
+  console.log(categories)
   // const url = "http://localhost:8000";
   const [data, setData] = useState({
     name: "",
@@ -100,7 +101,29 @@ const Add = ({ url }) => {
     toast.success(response.data.success);
   };
 
-  console.log(data);
+  useEffect(() => {
+    // Function to fetch categories
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch(`${url}/api/category/get`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        if(!data.success) {
+          toast.error(data.message)
+        }
+        setCategories(data.categories); // Assuming response data is an array
+        toast.success(data.message)
+      } catch (err) {
+        toast.error(err)
+      }
+    };
+
+    fetchCategories();
+  }, []); // Empty dependency array ensures it runs only once
+
+
   return (
     <div className="add">
       <form className="flex-col" onSubmit={handleSubmit}>
@@ -159,18 +182,13 @@ const Add = ({ url }) => {
               onChange={handleChange}
               value={data.category}
             >
-              <option value="Benelli">Benelli</option>
-              <option value="BMW">BMW</option>
-              <option value="H-Davidson">H-Davidson</option>
-              <option value="Hero">Hero</option>
-              <option value="Honda">Honda</option>
-              <option value="Kawasaki">Kawasaki</option>
-              <option value="Keeway">Keeway</option>
-              <option value="KTM">KTM</option>
-              <option value="R-Enfield">R-Enfield</option>
-              <option value="Triumph">Triumph</option>
-              <option value="Universal">Universal</option>
-              {/* Add other options */}
+              {categories.map((category,i)=>{
+                return (
+                  <>
+                   <option key={i} value="">{category.menu_name}</option>
+                  </>
+                )
+              })}
             </select>
           </div>
 
