@@ -9,6 +9,7 @@ const CreateCategory = ({ url }) => {
     const [responseMessage, setResponseMessage] = useState('');
     const [categories, setCategories] = useState([]);
 
+    // Handle category creation
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -33,6 +34,7 @@ const CreateCategory = ({ url }) => {
                 toast.success(`Success: ${data.message}`);
                 setMenuName('');
                 setMenuImage(null);
+                fetchCategories(); // Re-fetch the categories after adding a new one
             } else {
                 const errorData = await response.json();
                 setResponseMessage(`Error: ${errorData.message}`);
@@ -42,33 +44,54 @@ const CreateCategory = ({ url }) => {
         }
     };
 
+    // Handle file input change
     const handleFileChange = (e) => {
         setMenuImage(e.target.files[0]);
     };
 
-    useEffect(() => {
-        // Function to fetch categories
-        const fetchCategories = async () => {
-            try {
-                const response = await fetch(`${url}/api/category/get`);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                const data = await response.json();
-                setCategories(data.categories); // Assuming response data is an array
-            } catch (err) {
-                console.error("Error fetching categories:", err);
-                setError(err.message);
+    // Fetch categories from the backend
+    const fetchCategories = async () => {
+        try {
+            const response = await fetch(`${url}/api/category/get`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
             }
-        };
+            const data = await response.json();
+            setCategories(data.categories); // Assuming response data is an array
+        } catch (err) {
+            console.error("Error fetching categories:", err);
+            setResponseMessage(err.message);
+        }
+    };
 
-        fetchCategories();
+    // Handle category deletion
+    const deleteCategory = async (id) => {
+        try {
+            const response = await fetch('http://localhost:8000/api/category/delete', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ id }), // Send the category ID in the body
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                toast.success(result.message);
+                fetchCategories(); // Re-fetch categories after deletion
+            } else {
+                toast.error(result.message);
+            }
+        } catch (error) {
+            toast.error('Error: Failed to delete category.');
+            console.error('Error deleting category:', error.message);
+        }
+    };
+
+    useEffect(() => {
+        fetchCategories(); // Fetch categories when component is mounted
     }, []); // Empty dependency array ensures it runs only once
-
-
-
-
-
 
     return (
         <>
@@ -124,13 +147,13 @@ const CreateCategory = ({ url }) => {
                                     src={fassets.cross_icon}
                                     alt="Delete"
                                     className="delete-icon"
+                                    onClick={() => deleteCategory(category._id)} // Call delete function with category ID
                                 />
                             </div>
                         ))}
                     </div>
                 </div>
             </div>
-
         </>
     );
 };
