@@ -26,16 +26,15 @@ const AccessoriesItem = (props) => {
             <h3>{name}</h3>
           </div>
           <div className="accessory-item-ratings">
-            <div className="first">
+            {/* <div className="first">
               <img src={fassets.rating_starts} alt="" /><span>{reviews}</span>
             </div>
-            <p><span>Total Ratings : </span>{reviewCount}</p>
+            <p><span>Total Ratings : </span>{reviewCount}</p> */}
           </div>
           <div className="accessory-item-price">
-            <span>Price : </span>
             <div className="prices">
               <p className="accessory-item-new-price">&#8377;{price.oldPrice} </p>
-              <p className="accessory-item-old-price"> &nbsp; &#8377;{price.newPrice}</p>
+              <p className="accessory-item-old-price">&#8377;{price.newPrice}</p>
             </div>
 
           </div>

@@ -28,14 +28,14 @@ const placeOrder = async (req, res) => {
                 },
                 quantity,
             })),
-            {
-                price_data: {
-                    currency: "inr",
-                    product_data: { name: "Including shipping fee and GST" },
-                    unit_amount: 0 * 100,
-                },
-                quantity: 1,
-            },
+            // {
+            //     price_data: {
+            //         currency: "inr",
+            //         product_data: { name: "Including shipping fee and GST" },
+            //         unit_amount: 0 * 100,
+            //     },
+            //     quantity: 1,
+            // },
         ];
 
         const session = await stripe.checkout.sessions.create({
@@ -47,7 +47,7 @@ const placeOrder = async (req, res) => {
 
         if (!session) return res.json({ success: false, message: "Failed to create payment session" });
 
-        res.status(200).json({
+        return res.status(200).json({
             success: true,
             message: "Payment session created successfully",
             session_url: session.url,

@@ -183,12 +183,12 @@ const PlaceOrder = () => {
             <hr />
             <div className="cart-total-details">
               <p>Shipping Fee + GST</p>
-              <p>&#8377;{(getTotalCartAmount() * 0.15).toFixed(2)}</p>
+              <p>&#8377;{0}</p>
             </div>
             <hr />
             <div className="cart-total-details">
               <p>Total</p>
-              <p>&#8377;{(getTotalCartAmount() + getTotalCartAmount() * 0.15).toFixed(2)}</p>
+              <p>&#8377;{getTotalCartAmount()}</p>
             </div>
             <button type="submit">PROCEED TO PAYMENT</button>
           </div>

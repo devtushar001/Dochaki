@@ -38,15 +38,14 @@ console.log(price)
                 <div className="accessory-view-right">
                     <h1>{name}</h1>
                     <div className="accessory-view-right-star">
-                        <img src={fassets.rating_starts} alt="" />
-                        <p>{reviewCount}</p>
+                    <span>Reviews : {reviews}</span><b>&#x2605;</b><p> Review Count : {reviewCount}</p>
                     </div>
                     <div className="accessory-view-right-prices">
                         <div className="accessory-view-right-price-old">
-                            {price.oldPrice} <span>{price.currency}</span>
+                        &#8377;{price.oldPrice} <span>{price.currency}</span>
                         </div>
                         <div className="accessory-view-right-price-new">
-                            {price.newPrice} <span>{price.currency}</span>
+                        &#8377;{price.newPrice} <span>{price.currency}</span>
                         </div>
                     </div>
                     <div className="accessory-view-right-description">
@@ -55,8 +54,9 @@ console.log(price)
                     <div className="accessory-view-right-size">
                         <h1>Details For You</h1>
                         <div className="accessory-view-right-sizes">
-                            <div>Quantity : {!cartItem[_id] ? 0 : cartItem[_id]}</div>
-                            <div className="chrome" onClick={() => removeFromCart(_id)}>Remove From Cart</div>
+                            {!cartItem[_id] ? " " :<div onClick={() => removeFromCart(_id)} >-</div>}
+                            <div>{!cartItem[_id] ? 0 : cartItem[_id]}</div>
+                            <div onClick={() => addToCart(_id)} >+</div>
                         </div>
                         <div className="other-details-container">
                             <p className="accessory-view-right-category"> <span>Category : {category}, {name}</span></p>
@@ -78,8 +78,7 @@ console.log(price)
 
                     </div>
                     <div className="buttons">
-                        <Link to={'/cart'}><button className="buy-now" onClick={() => { cartItem[_id] === undefined ? addToCart(_id) : console.log(cartItem[_id]) }}>BUY NOW</button></Link>
-                        <button className="add-to" onClick={() => { addToCart(_id) }} >ADD TO CART</button>
+                        <Link to={'/cart'}><button className="buy-now" >BUY NOW</button></Link>
                     </div>
                 </div>
             </div>

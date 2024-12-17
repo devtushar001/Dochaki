@@ -90,25 +90,27 @@
 }
 
 .accessory-view-right-size h1 {
-    margin-top: 55px;
+    margin-top: 45px;
     color: #656565;
     font-size: 20px;
     font-weight: 600;
 }
 
 .accessory-view-right-sizes {
-    display: flex;
-    margin: 40px 0;
-    gap: 20px;
+    display: grid;
+    grid-template-columns: 1fr 0.5fr 1fr;
+    margin: 35px 0;
+    /* gap: 20px; */
     flex-wrap: wrap;
 }
 
 .accessory-view-right-sizes div {
     padding: 12px 20px;
     background: #fbfbfb;
-    border: 1px solid #ebebeb;
-    border-radius: 3px;
+    border: 1px solid #bfbfbf;
+    /* border-radius: 3px; */
     cursor: pointer;
+    margin-right: -1px;
 }
 
 .accessory-view-right-sizes .chrome {
@@ -116,24 +118,14 @@
     color: #fff;
 }
 
-.accessory-view-right button {
-    padding: 13px 32px;
-    font-size: 16px;
-    font-weight: 600;
-    color: white;
-    background: #007a24;
-    border: none;
-    margin-bottom: 40px;
-    cursor: pointer;
-    outline: none;
-}
 
 .accessory-view-right .buy-now {
+    width: 100%;
     padding: 13px 32px;
     font-size: 16px;
     font-weight: 600;
     color: white;
-    background: #ff8c00;
+    background: #ff5e00;
     border: none;
     margin-right: 20px;
     margin-bottom: 40px;
