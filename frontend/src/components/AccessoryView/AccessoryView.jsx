@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
 import './AccessoryView.css';
-import { fassets } from '../../frontend_assets/assets';
 import { Link } from "react-router-dom";
 import { DochakiContext } from "../Context/Contact";
 

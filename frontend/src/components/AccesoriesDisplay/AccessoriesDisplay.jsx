@@ -12,7 +12,7 @@ const AccessoriesDisplay = ({ category }) => {
     return (
         <>
             <div className="accessories-display" id="accessories-display">
-                <h2>Top accessories near you</h2>
+                <h2>Our latest products</h2>
                 <div className="accessories-display-list">
                     {bikeAccessories.map((item, i) => {
                         if (category === "All" || category === item.category) {
