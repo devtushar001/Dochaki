@@ -1,0 +1,30 @@
+.shop-categories {
+    margin-top: 120px;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+    padding: 10px;
+    background-color: rgb(203, 203, 203);
+    margin-bottom: 20px;
+}
+
+.shop-category-item {
+     width: 180px;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     justify-content: center;
+}
+
+.shop-category-item img {
+    border-radius: 50%;
+    cursor: pointer;
+    width: 100%;
+}
+
+.shop-categories .shop-category-item .active {
+    border: 2px solid blue;
+}

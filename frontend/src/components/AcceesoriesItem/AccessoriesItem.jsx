@@ -7,7 +7,7 @@ import { DochakiContext } from "../Context/Contact";
 
 const AccessoriesItem = (props) => {
   const {addToCart, removeFromCart, cartItem, url} = useContext(DochakiContext);
-  const { _id, name, price, images, category, reviews, reviewCount } = props;
+  const { _id, name, price, images, category } = props;
   return (
     <>
       <div className="accessory-item">

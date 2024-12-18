@@ -1,0 +1,19 @@
+.shopnow {
+    width: 100%;
+    height: 220px;
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+}
+
+.shopnow .shop-btn {
+    padding: 20px 140px;
+    background-color: rgb(247, 62, 0);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    box-shadow: 0px 0px 10px #00000042;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+}

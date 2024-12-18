@@ -187,7 +187,7 @@ const Add = ({ url }) => {
               {categories.map((category,i)=>{
                 return (
                   <>
-                   <option key={i} value="">{category.menu_name}</option>
+                   <option key={i} value={category.menu_name}>{category.menu_name}</option>
                   </>
                 )
               })}

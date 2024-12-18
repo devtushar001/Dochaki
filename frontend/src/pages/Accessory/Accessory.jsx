@@ -9,10 +9,13 @@ const Accessory = () => {
     // console.log("parameter",id);
     const newId = id;
     const { bikeAccessories } = useContext(DochakiContext);
+    const lastSixProducts = bikeAccessories.slice(-6);
+    console.log("Hello")
+    console.log(lastSixProducts)
     return (
         <>
             <div className="accessory-full-view">
-                {bikeAccessories.map((item, i) => {
+                {lastSixProducts.map((item, i) => {
                     if (newId === item._id) {
                         const { _id, name,  reviews, reviewCount, category, price, description, images, additionalInfo } = item;
                         return (
