@@ -27,6 +27,7 @@ const ShopCategories = ({ category, setCategory }) => {
         };
 
         fetchCategories();
+        window.scrollTo(0,0);
     }, []); // Empty dependency array ensures it runs only once
 
     return (
