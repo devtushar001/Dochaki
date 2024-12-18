@@ -88,7 +88,7 @@ const PlaceOrder = () => {
   };
 
   useEffect(() => {
-    window.scrollTo(0, document.body.scrollHeight);
+    window.scrollTo(0, 0);
     if (!token) navigate("/cart")
     else if (getTotalCartAmount() === 0) navigate("/cart")
   }, [token])

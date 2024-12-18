@@ -41,7 +41,7 @@ const AccessoriesItem = (props) => {
 
           <p className="accessory-item-category"><span>Category : </span>{category}</p>
         </div>
-        <Link to={`accessory/${_id}`}><button className="view-more">View More..</button></Link>
+        <Link to={`/accessory/${_id}`}><button className="view-more">View More..</button></Link>
       </div>
     </>
   )

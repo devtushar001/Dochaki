@@ -69,6 +69,8 @@
 }
 
 .accessories-item-img-container {
+    height: 320px;
+    overflow: hidden;
     position: relative;
 }
 

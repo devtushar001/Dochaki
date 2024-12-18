@@ -63,19 +63,6 @@ console.log(price)
                         </div>
 
                     </div>
-                    <div className="quantity-container">
-                        <div className="accessories-item-img-container">
-
-                            {/* {!cartItem[_id] ? <img className="add" onClick={() => addToCart(_id)} src={fassets.add_icon_white} alt="" />
-                                : <div className="accessory-item-counter">
-                                    <img src={fassets.remove_icon_red} onClick={() => removeFromCart(_id)} alt="" />
-                                    <p>{cartItem[_id]}</p>
-                                    <img className="adds" onClick={() => addToCart(_id)} src={fassets.add_icon_green} alt="" />
-                                </div>
-                            } */}
-                        </div>
-
-                    </div>
                     <div className="buttons">
                         <Link to={'/cart'}><button className="buy-now" >BUY NOW</button></Link>
                     </div>
