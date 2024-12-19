@@ -113,3 +113,137 @@
 .nav-profile-dropdown li:hover {
     color: rgb(0, 105, 180);
 }
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .navbar-menu {
+        font-size: 16px;
+        gap: 15px;
+    }
+
+    .navbar-right {
+        gap: 20px;
+        margin-right: 50px;
+    }
+
+    .navbar .logo {
+        margin-left: 50px;
+        width: 110px;
+    }
+}
+
+@media (max-width: 992px) {
+    .navbar {
+        height: 80px;
+        margin-bottom: 30px;
+    }
+
+    .navbar-menu {
+        font-size: 16px;
+        gap: 10px;
+    }
+
+    .navbar-right {
+        display: none; /* Hide right section for smaller screens */
+    }
+
+    .navbar .logo {
+        margin-left: 20px;
+        width: 100px;
+    }
+
+    .navbar button {
+        font-size: 14px;
+        padding: 8px 20px;
+    }
+
+    .navbar-profile:hover .nav-profile-dropdown {
+        padding: 10px 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        height: 70px;
+    }
+
+    .navbar-menu {
+        display: none; /* Hide the menu on small screens */
+        flex-direction: column;
+        align-items: center;
+        position: absolute;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        background-color: #fff;
+        border-top: 1px solid rgb(0, 97, 162);
+    }
+
+    .navbar-menu li {
+        padding: 15px 0;
+        text-align: center;
+        width: 100%;
+    }
+
+    .navbar-profile {
+        margin-right: 10px;
+    }
+
+    .navbar-search-icon .dot {
+        top: -5px;
+        right: -5px;
+    }
+
+    .navbar .logo {
+        width: 80px;
+        margin-left: 10px;
+    }
+
+    .navbar button {
+        font-size: 14px;
+        padding: 8px 18px;
+    }
+
+    /* Hamburger Menu (assuming you add a hamburger menu icon) */
+    .navbar-menu-toggle {
+        display: block;
+        cursor: pointer;
+        margin-right: 10px;
+        z-index: 3;
+    }
+
+    .navbar-menu-toggle.active + .navbar-menu {
+        display: flex; /* Show the menu on click */
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar {
+        height: 60px;
+    }
+
+    .navbar-menu {
+        font-size: 14px;
+        gap: 8px;
+    }
+
+    .navbar .logo {
+        width: 70px;
+    }
+
+    .navbar button {
+        font-size: 12px;
+        padding: 6px 15px;
+    }
+
+    .navbar-profile {
+        margin-right: 5px;
+    }
+
+    .navbar-search-icon .dot {
+        width: 8px;
+        height: 8px;
+        top: -6px;
+        right: -6px;
+    }
+}

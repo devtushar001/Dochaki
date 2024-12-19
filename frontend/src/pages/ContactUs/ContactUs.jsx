@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './ContactUs.css'; // To style the page (we will create this CSS file)
 import { assets } from '../../assets/assets';
 import { DochakiContext } from '../../components/Context/Contact';
@@ -50,6 +50,10 @@ const ContactUs = () => {
         }
     };
 
+    useEffect(()=> {
+        window.scrollTo(0, 0)
+    }, []);
+
     return (
         <div className="contact-us">
             <div className="left-container">
@@ -57,6 +61,17 @@ const ContactUs = () => {
                 <p className="info">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto sint adipisci natus ea cupiditate, neque rerum voluptas? Non qui velit nihil omnis inventore!
                 </p>
+                <div className="connecting-platforms">
+                <h4>Connect with us..</h4>
+                    <a href="https://www.facebook.com/dochaki/"><img src={assets.facebook_icon} alt="" /></a>
+                    <a href=""><img src={assets.instagram_icon} alt="" /></a>
+                    <a href="https://wa.me/91-880-679-5165"><img src={assets.whatsapp} alt="" /></a>
+                </div>
+                <div className="other-connecting-details">
+                    <h4>Other connecting details...</h4>
+                    <p>Contact : +91-880-679-5165</p>
+                    <p>Email : dochakidesigns@gmail.com</p>
+                </div>
             </div>
             <div className="right-container">
                 <fieldset>
@@ -123,7 +138,9 @@ const ContactUs = () => {
                     </form>
                 </fieldset>
             </div>
+
         </div>
+
     );
 };
 

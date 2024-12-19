@@ -9,10 +9,16 @@ import ktm from "./ktm.png";
 import triumph from "./triumph.png";
 import royal_enfield from "./royal_enfield.png";
 import universal from "./universal.png";
-import logo from "./web_logo.png"
-import logo_blur from "./f11.png"
+import logo from "./web_logo.png";
+import logo_blur from "./f11.png";
+import whatsapp from "./whatsapp.png";
+import facebook_icon from "./communication.png";
+import instagram_icon from "./social.png"
 
 export const assets = {
+    whatsapp,
+    facebook_icon,
+    instagram_icon,
     logo_blur,
     logo,
     benelli,

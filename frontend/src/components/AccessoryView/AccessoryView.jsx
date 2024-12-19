@@ -64,7 +64,7 @@ console.log(price)
 
                     </div>
                     <div className="buttons">
-                        <Link to={'/cart'}><button className="buy-now" >BUY NOW</button></Link>
+                        <Link to={'/cart'}><button className="buy-now" onClick={() => !cartItem[_id] ? addToCart(_id) : cartItem[_id]} >BUY NOW</button></Link>
                     </div>
                 </div>
             </div>
