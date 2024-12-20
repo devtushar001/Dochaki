@@ -1,5 +1,5 @@
 import express from 'express';
-import upload from '../middlewares/upload.js'
+import upload from '../middlewares/upload.js';
 import {addCategory, deleteCategory, getAllCategories} from '../controllers/categoryController.js';
 
 const categoryRouter = express.Router()

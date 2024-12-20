@@ -8,6 +8,7 @@ import userRouter from './routes/userRoute.js';
 import cartRouter from './routes/cartRoute.js';
 import { categoryRouter } from './routes/categoryRoute.js';
 import orderRouter from './routes/orderRoute.js';
+import nestedCtgRouter from './routes/nestedCtgRoute/nestedCtgRoute.js';
 
 dotenv.config();
 
@@ -49,6 +50,9 @@ app.use('/catupload', express.static('catupload'));
 
 // order router setup
 app.use('/api/order', orderRouter);
+
+// nested category adding api
+app.use('/api/category', nestedCtgRouter)
 
 // running server on the port
 app.listen(port, () => {

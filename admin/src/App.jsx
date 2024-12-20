@@ -9,6 +9,7 @@ import Panel from "./pages/Panel/Panel";
 // import NewAdd from "./pages/NewAdd.jsx/NewAdd";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import NewAdd from "./pages/NewAdd/NewAdd";
 
 function App() {
 
@@ -25,7 +26,7 @@ function App() {
           <Route path="/add" element={<Add url={url} />} />
           <Route path="/list" element={<List url={url} />} />
           <Route path="/orders" element={<Orders url={url} />} />
-          {/* <Route path="/new-add" element={<NewAdd />} /> */}
+          <Route path="/new-add" element={<NewAdd url={url} />} />
         </Routes>
         <ToastContainer />
       </div>
