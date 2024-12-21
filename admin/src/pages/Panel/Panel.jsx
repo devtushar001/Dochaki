@@ -8,7 +8,7 @@ const CreateCategory = ({ url }) => {
     const [menuSub, setMenuSub] = useState('');
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(false);
-
+    const [sub, setSub] = useState(false);
     // Handle category creation
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -82,7 +82,7 @@ const CreateCategory = ({ url }) => {
     const deleteCategory = async (id) => {
         try {
             setLoading(true);
-            const response = await fetch(`${url}/api/category/delete`, {
+            const response = await fetch(`${url}/api/category/delete-parent`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -114,14 +114,14 @@ const CreateCategory = ({ url }) => {
 
         try {
             setLoading(true);
-            const response = await fetch(`${url}/api/category/add-sub`, {
+            const response = await fetch(`${url}/api/category/add-menu-sub`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
                     menu_name: menuName,
-                    menu_sub: menuSub,
+                    new_sub: menuSub,
                 }),
             });
 
@@ -141,18 +141,45 @@ const CreateCategory = ({ url }) => {
         }
     };
 
+    const deleteSubCategory = async (parentId, subId) => {
+        try {
+            setLoading(true);
+            const response = await fetch(`${url}/api/category/delete-sub-category`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ parentId, subId }),
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                toast.success(result.message);
+                fetchCategories(); // Re-fetch categories after deletion
+            } else {
+                toast.error(result.message);
+            }
+        } catch (error) {
+            toast.error('Error: Failed to delete category.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
         fetchCategories();
+
     }, []); // Empty dependency array ensures it runs only once
 
     return (
         <div className="panel-container">
             {/* Create Category Section */}
             <div className="create-category">
-                <h1>Create Category</h1>
+                <h1>{!sub ? "Create Category" : "Add Subcategory"}</h1>
                 <form onSubmit={handleSubmit} className="create-category-form">
                     <div className="form-group">
-                        <label htmlFor="menuName">Menu Name:</label>
+                        <label htmlFor="menuName">Menu Name(required)</label>
                         <input
                             type="text"
                             id="menuName"
@@ -163,7 +190,7 @@ const CreateCategory = ({ url }) => {
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="menuSub">Menu Sub:</label>
+                        <label htmlFor="menuSub">{!sub ? "Subcategory (optional) " : "New subcategory (required) "}</label>
                         <input
                             type="text"
                             id="menuSub"
@@ -172,47 +199,82 @@ const CreateCategory = ({ url }) => {
                             placeholder="Enter submenu name"
                         />
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="menuImage">Menu Image:</label>
-                        <input
-                            type="file"
-                            id="menuImage"
-                            onChange={handleFileChange}
-                            required
-                        />
-                    </div>
-                    <button type="submit" className="submit-btn" disabled={loading}>
-                        {loading ? 'Creating...' : 'Create Category'}
-                    </button>
+                    {!sub
+                        ? <div className="paraent">
+                            <div className="form-group">
+                                <label htmlFor="menuImage">Menu Image (required)</label>
+                                <input
+                                    type="file"
+                                    id="menuImage"
+                                    onChange={handleFileChange}
+                                    required
+                                />
+                            </div>
+                            <div className="form-group-btn">
+                                <div className="container">
+                                    <button type="submit" className="submit-btn" disabled={loading} id='create-ctg'>
+                                        {loading ? 'Creating...' : 'Create'}
+                                    </button>
+
+                                    <button onClick={() => { setSub(true) }} id='add-ctg-blue'>Add subcategory</button>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        : <div className="form-group-btn">
+                            <label id="selection" htmlFor="menuSub">Select a parent category (required)</label>
+                            <select
+                                className="add-sub-category-select"
+                                onChange={(e) => setMenuName(e.target.value)}
+                                value={menuName}
+                            >
+                                <option value="" disabled>
+                                    Select a category
+                                </option>
+                                {categories.map((category) => (
+                                    <option value={category.menu_name} key={category.id}>
+                                        {category.menu_name}
+                                    </option>
+                                ))}
+                            </select>
+                            <br />
+                            <div className="buttons">
+                                <button onClick={addSubCategory} disabled={loading} id='create-ctg'>
+                                    {loading ? 'Adding...' : 'Add'}
+                                </button>
+                                <button onClick={() => { setSub(false) }} id='create-ctg-blue'>Create new category</button>
+                            </div>
+                        </div>
+                    }
+
+
                 </form>
             </div>
 
             {/* Add Subcategory Section */}
-            <div className="add-sub-category">
-                <h2>Add Subcategory</h2>
-                <select
-                    className="add-sub-category-select"
-                    onChange={(e) => setMenuName(e.target.value)}
-                    value={menuName}
-                >
-                    <option value="" disabled>
-                        Select a category
-                    </option>
-                    {categories.map((category) => (
-                        <option value={category.menu_name} key={category.id}>
-                            {category.menu_name}
-                        </option>
-                    ))}
-                </select>
-                <input
-                    type="text"
-                    value={menuSub}
-                    onChange={(e) => setMenuSub(e.target.value)}
-                    placeholder="Enter subcategory"
-                />
-                <button onClick={addSubCategory} disabled={loading}>
-                    {loading ? 'Adding...' : 'Add Subcategory'}
-                </button>
+
+            <div className="fetch-all-categories">
+                <h2>All Categories</h2>
+                <div className="categories">
+                    {categories.map((category, i) => {
+                        return (
+                            <>
+                                <div className='single-category' key={i}> <div id='flex'><div className="all" id='flexOne'><img id='ctg-img' src={`${url}/${category.menu_image}`} alt="" /><p> {category.menu_name}</p></div> <button id='delete-parent-category' onClick={()=>{deleteCategory(category._id)}}>Delete</button></div> 
+                                    <div className='sub-categories'>
+                                        {category.menu_sub.map((item, i) => {
+                                            return (
+                                                <>
+                                                    <div key={i} id='opt'><p>&#8594; {item}</p><p id='delete-sub-category' onClick={()=>{deleteSubCategory(category._id, item)}}>X</p></div>
+                                                </>
+                                            )
+                                        })}
+                                    </div>
+                                </div>
+                            </>
+                        )
+                    })}
+                </div>
             </div>
         </div>
     );
