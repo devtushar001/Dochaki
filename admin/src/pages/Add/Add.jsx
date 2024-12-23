@@ -5,8 +5,7 @@ import { toast } from "react-toastify";
 
 const Add = ({ url }) => {
   const [categories, setCategories] = useState([]);
-  console.log(categories)
-  // const url = "http://localhost:8000";
+
   const [data, setData] = useState({
     name: "",
     description: "",
@@ -20,6 +19,8 @@ const Add = ({ url }) => {
     reviewCount: "",
   });
 
+  console.log(data)
+
   const [images, setImages] = useState({
     mainImage: null,
     secondImage: null,
@@ -30,10 +31,18 @@ const Add = ({ url }) => {
   // Handle text data changes
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+
+    if (name === "subcategory") {
+      setData((prev) => ({
+        ...prev,
+        category: `${prev.category.split(',')[0]} ${value}`, // Append subcategory to category
+      }));
+    } else {
+      setData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
   // Handle image file selection
@@ -71,12 +80,13 @@ const Add = ({ url }) => {
 
       if (!response.ok) {
         toast.error(response.message);
+        return;
       }
 
       const result = await response.json();
       toast.success(result.message);
     } catch (error) {
-      toast.error(error);
+      toast.error(error.message);
     }
 
     // Reset form fields
@@ -86,7 +96,7 @@ const Add = ({ url }) => {
       oldPrice: "",
       newPrice: "",
       currency: "",
-      category: "",
+      category: "Universal",
       material: "",
       compatibility: "",
       reviews: "",
@@ -98,13 +108,10 @@ const Add = ({ url }) => {
       thirdImage: null,
       fourthImage: null,
     });
-    toast.success(response.data.success);
   };
 
-  
-
   useEffect(() => {
-    // Function to fetch categories
+    // Fetch categories
     const fetchCategories = async () => {
       try {
         const response = await fetch(`${url}/api/category/all-category`);
@@ -112,20 +119,18 @@ const Add = ({ url }) => {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const data = await response.json();
-        console.log(data.allCategories)
-        if(!data.success) {
-          toast.error(data.message)
+        if (!data.success) {
+          toast.error(data.message);
         }
         setCategories(data.allCategories); // Assuming response data is an array
-        toast.success(data.message)
+        toast.success(data.message);
       } catch (err) {
-        toast.error(err)
+        toast.error(err.message);
       }
     };
 
     fetchCategories();
-  }, []); // Empty dependency array ensures it runs only once
-
+  }, [url]);
 
   return (
     <div className="add">
@@ -151,6 +156,7 @@ const Add = ({ url }) => {
             </div>
           ))}
         </div>
+
         {/* Product Name */}
         <div className="add-product-name flex-col">
           <p>Product Name</p>
@@ -176,25 +182,44 @@ const Add = ({ url }) => {
           ></textarea>
         </div>
 
-        {/* Category and Price */}
+        {/* Category and Subcategory */}
         <div className="add-category-price">
           <div className="add-category flex-col">
             <p>Product Category</p>
             <select
               name="category"
               onChange={handleChange}
-              value={data.category}
+              value={data.category.split(',')[0]} // Show main category only
             >
-              {categories.map((category,i)=>{
-                return (
-                  <>
-                   <option key={i} value={category.menu_name}>{category.menu_name}</option>
-                  </>
-                )
-              })}
+              {categories.map((category, i) => (
+                <option key={i} value={category.menu_name}>
+                  {category.menu_name}
+                </option>
+              ))}
             </select>
+
+            <p>Subcategory</p>
+            <div>
+              {categories.map((category, i) =>
+                category.menu_name === data.category.split(',')[0] ? (
+                  <select
+                    key={i}
+                    name="subcategory"
+                    onChange={handleChange}
+                  >
+                    <option value="">Select Subcategory</option>
+                    {category.menu_sub.map((submenu, index) => (
+                      <option key={index} value={submenu}>
+                        {submenu}
+                      </option>
+                    ))}
+                  </select>
+                ) : null
+              )}
+            </div>
           </div>
 
+          {/* Pricing Details */}
           <div className="add-price flex-col">
             <p>Old Price</p>
             <input
@@ -215,19 +240,18 @@ const Add = ({ url }) => {
             <p>Currency</p>
             <input
               onChange={handleChange}
-              value={handleChange ? "INR" : data.currency}
-              // value="INR"
-              // value={data.currency}
+              value={data.currency}
               type="text"
               name="currency"
               placeholder="Currency Type"
             />
           </div>
-
         </div>
+
         <button type="submit" className="add-btn">ADD</button>
         <hr />
         <h2>Other Details</h2>
+
         {/* Reviews Section */}
         <div className="add-reviews">
           <p>Reviews</p>
@@ -247,31 +271,6 @@ const Add = ({ url }) => {
             placeholder="Review Count"
           />
         </div>
-
-        {/* Others' Details */}
-
-        <div className="others-data flex-col">
-          <p>Material</p>
-          <input
-            onChange={handleChange}
-            value={data.material}
-            type="text"
-            name="material"
-            placeholder="Material (e.g., Steel)"
-          />
-
-          <p>Compatibility</p>
-          <input
-            onChange={handleChange}
-            value={data.compatibility}
-            type="text"
-            name="compatibility"
-            placeholder="Compatibility (e.g., Model names)"
-          />
-        </div>
-
-        {/* Submit Button */}
-        {/* <button type="submit" className="add-btn">ADD</button> */}
       </form>
     </div>
   );
