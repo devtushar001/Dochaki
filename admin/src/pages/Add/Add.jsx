@@ -107,15 +107,16 @@ const Add = ({ url }) => {
     // Function to fetch categories
     const fetchCategories = async () => {
       try {
-        const response = await fetch(`${url}/api/category/get`);
+        const response = await fetch(`${url}/api/category/all-category`);
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const data = await response.json();
+        console.log(data.allCategories)
         if(!data.success) {
           toast.error(data.message)
         }
-        setCategories(data.categories); // Assuming response data is an array
+        setCategories(data.allCategories); // Assuming response data is an array
         toast.success(data.message)
       } catch (err) {
         toast.error(err)
