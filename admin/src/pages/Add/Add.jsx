@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 
 const Add = ({ url }) => {
   const [categories, setCategories] = useState([]);
-
+  
   const [data, setData] = useState({
     name: "",
     description: "",
@@ -13,6 +13,7 @@ const Add = ({ url }) => {
     newPrice: "",
     currency: "",
     category: "",
+    subcategory: "",
     material: "",
     compatibility: "",
     reviews: "",
@@ -32,17 +33,20 @@ const Add = ({ url }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    if (name === "subcategory") {
-      setData((prev) => ({
-        ...prev,
-        category: `${prev.category.split(',')[0]} ${value}`, // Append subcategory to category
-      }));
-    } else {
-      setData((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
-    }
+    setData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  // Handle category change and reset subcategory
+  const handleCategoryChange = (e) => {
+    const { value } = e.target;
+    setData((prev) => ({
+      ...prev,
+      category: value,
+      subcategory: "", // Reset subcategory when main category changes
+    }));
   };
 
   // Handle image file selection
@@ -79,7 +83,7 @@ const Add = ({ url }) => {
       });
 
       if (!response.ok) {
-        toast.error(response.message);
+        toast.error("Failed to add accessory");
         return;
       }
 
@@ -96,12 +100,14 @@ const Add = ({ url }) => {
       oldPrice: "",
       newPrice: "",
       currency: "",
-      category: "Universal",
+      category: "",
+      subcategory: "",
       material: "",
       compatibility: "",
       reviews: "",
       reviewCount: "",
     });
+
     setImages({
       mainImage: null,
       secondImage: null,
@@ -188,9 +194,10 @@ const Add = ({ url }) => {
             <p>Product Category</p>
             <select
               name="category"
-              onChange={handleChange}
-              value={data.category.split(',')[0]} // Show main category only
+              onChange={handleCategoryChange}
+              value={data.category}
             >
+              <option value="">Select Category</option>
               {categories.map((category, i) => (
                 <option key={i} value={category.menu_name}>
                   {category.menu_name}
@@ -198,25 +205,24 @@ const Add = ({ url }) => {
               ))}
             </select>
 
-            <p>Subcategory</p>
-            <div>
-              {categories.map((category, i) =>
-                category.menu_name === data.category.split(',')[0] ? (
-                  <select
-                    key={i}
-                    name="subcategory"
-                    onChange={handleChange}
-                  >
-                    <option value="">Select Subcategory</option>
-                    {category.menu_sub.map((submenu, index) => (
-                      <option key={index} value={submenu}>
-                        {submenu}
-                      </option>
-                    ))}
-                  </select>
-                ) : null
-              )}
-            </div>
+            {/* Subcategory Dropdown */}
+            {data.category && categories.find(cat => cat.menu_name === data.category)?.menu_sub.length > 0 && (
+              <>
+                <p>Subcategory</p>
+                <select
+                  name="subcategory"
+                  onChange={handleChange}
+                  value={data.subcategory}
+                >
+                  <option value="">Select Subcategory</option>
+                  {categories.find(cat => cat.menu_name === data.category)?.menu_sub.map((submenu, index) => (
+                    <option key={index} value={submenu}>
+                      {submenu}
+                    </option>
+                  ))}
+                </select>
+              </>
+            )}
           </div>
 
           {/* Pricing Details */}
@@ -247,11 +253,11 @@ const Add = ({ url }) => {
             />
           </div>
         </div>
-
         <button type="submit" className="add-btn">ADD</button>
-        <hr />
-        <h2>Other Details</h2>
 
+        <hr />
+
+        <h2>Other Details</h2>
         {/* Reviews Section */}
         <div className="add-reviews">
           <p>Reviews</p>
@@ -271,6 +277,29 @@ const Add = ({ url }) => {
             placeholder="Review Count"
           />
         </div>
+
+        {/* Others' Details */}
+
+        <div className="others-data flex-col">
+          <p>Material</p>
+          <input
+            onChange={handleChange}
+            value={data.material}
+            type="text"
+            name="material"
+            placeholder="Material (e.g., Steel)"
+          />
+
+          <p>Compatibility</p>
+          <input
+            onChange={handleChange}
+            value={data.compatibility}
+            type="text"
+            name="compatibility"
+            placeholder="Compatibility (e.g., Model names)"
+          />
+        </div>
+
       </form>
     </div>
   );

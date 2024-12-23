@@ -7,7 +7,8 @@ import { DochakiContext } from "../Context/Contact";
 
 const AccessoriesItem = (props) => {
   const {addToCart, removeFromCart, cartItem, url} = useContext(DochakiContext);
-  const { _id, name, price, images, category } = props;
+  const { _id, name, price, images, category, subcategory } = props;
+  console.log(subcategory)
   return (
     <>
       <div className="accessory-item">
@@ -39,7 +40,7 @@ const AccessoriesItem = (props) => {
 
           </div>
 
-          <p className="accessory-item-category"><span>Category : </span>{category}</p>
+          <p className="accessory-item-category" id="ctgs" ><span >Category :  </span><p id="ctg-sub-ctg"> {category} {!subcategory? "" : <img src={fassets.arrow_icon}  alt="" />}{subcategory}</p></p>
         </div>
         <Link to={`/accessory/${_id}`}><button className="view-more">View More..</button></Link>
       </div>

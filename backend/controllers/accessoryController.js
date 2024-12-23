@@ -7,6 +7,7 @@ const addAccessory = async (req, res) => {
   const {
     name,
     category,
+    subcategory,
     reviews,
     reviewCount,
     oldPrice,
@@ -16,7 +17,8 @@ const addAccessory = async (req, res) => {
     material,
     compatibility,
   } = req.body;
-
+   
+  console.log(subcategory)
   // Validate required fields
   if (!name || !category || !oldPrice || !newPrice || !description) {
     return res.json({ success: false, message: "Missing required fields" });
@@ -25,6 +27,7 @@ const addAccessory = async (req, res) => {
   const newProduct = new AccessoryModel({
     name,
     category,
+    subcategory,
     reviews: parseFloat(reviews) || 0,
     reviewCount: parseInt(reviewCount) || 0,
     price: {

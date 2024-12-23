@@ -100,3 +100,20 @@
 .accessory-item-counter img{
    width: 30px;
 }
+
+#ctgs {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+#ctg-sub-ctg {
+    width: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#ctg-sub-ctg img {
+    width: 8px;
+}

@@ -10,6 +10,10 @@ const accessorySchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    subcategory: {
+        type: String,
+        required: true,
+    },
     reviews: {
         type: Number,
         min: 0,
