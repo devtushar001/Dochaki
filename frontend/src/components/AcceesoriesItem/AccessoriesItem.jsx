@@ -40,7 +40,7 @@ const AccessoriesItem = (props) => {
 
           </div>
 
-          <p className="accessory-item-category" id="ctgs" ><span >Category :  </span><p id="ctg-sub-ctg"> {category} {!subcategory? "" : <img src={fassets.arrow_icon}  alt="" />}{subcategory}</p></p>
+          <p className="accessory-item-category" id="ctgs" ><span >Fit In : </span><p id="ctg-sub-ctg"> {category} {!subcategory? "" : <img src={fassets.arrow_icon}  alt="" />}{subcategory}</p></p>
         </div>
         <Link to={`/accessory/${_id}`}><button className="view-more">View More..</button></Link>
       </div>

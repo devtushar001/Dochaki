@@ -6,23 +6,77 @@ import ShopAccessoryDisplay from "../../components/ShopAccessoryDisplay/ShopAcce
 
 const Shop = () => {
   const [category, setCategory] = useState('All');
+  const [activeSubCtg, setActiveSubCtg] = useState(null);
+  const [searchQuery, setSearchQuery] = useState(''); // State for search query
+  const [filteredAccessories, setFilteredAccessories] = useState([]); // State for filtered products
   const { bikeAccessories } = useContext(DochakiContext);
-  console.log(bikeAccessories)
 
+  // Scroll to top and initialize accessories on first render
   useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
+    window.scrollTo(0, 0);
+    setFilteredAccessories(bikeAccessories || []); // Prevent undefined issues
+  }, [bikeAccessories]);
+
+  // Handle filtering based on search query and category
+  useEffect(() => {
+    let filtered = bikeAccessories || [];
+
+    if (category !== 'All') {
+      filtered = filtered.filter(item => item.category === category);
+      setSearchQuery(""); // Reset search query when category changes
+    }
+
+    if (searchQuery.trim() !== '') {
+      filtered = filtered.filter(item => {
+        const query = searchQuery.toLowerCase();
+        return (
+          item.name.toLowerCase().includes(query) ||
+          item.category.toLowerCase().includes(query) ||
+          item.subcategory.toLowerCase().includes(query) ||
+          item.description.toLowerCase().includes(query) ||
+          item.additionalInfo?.compatibility?.some(compatibility =>
+            compatibility.toLowerCase().includes(query)
+          ) ||
+          item.price?.newPrice?.toString().includes(query) ||
+          item.price?.oldPrice?.toString().includes(query)
+        );
+      });
+    }
+
+    setFilteredAccessories(filtered);
+  }, [searchQuery, category, bikeAccessories]);
+
   return (
     <>
-    <div className="ksdl">
-      <ShopCategories category={category} setCategory={setCategory} />
-      < ShopAccessoryDisplay category={category}/>
-    </div>
-      {/* {bikeAccessories.map((item,i)=>{
-        return <AccessoriesItem key={i} _id={item._id} name={item.name} price={item.price} images={item.images} category/>
-      })} */}
+      {/* Search Bar */}
+      <div className="search-bar">
+        <input 
+          type="text" 
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Search for an item..."
+        />
+        <button onClick={() => setSearchQuery(searchQuery.trim())}>Search Item</button>
+      </div>
+      <hr />
+
+      {/* Categories and Accessories */}
+      <div className="ksdl">
+        <ShopCategories 
+          inputValue={setSearchQuery} 
+          category={category} 
+          setCategory={setCategory} 
+          activeSubCtg={activeSubCtg} 
+          setActiveSubCtg={setActiveSubCtg}
+        />
+        <ShopAccessoryDisplay 
+          activeSubCtg={activeSubCtg} 
+          category={category} 
+          accessories={filteredAccessories} 
+        />
+      </div>
     </>
-  )
-}
+  );
+};
 
 export default Shop;
