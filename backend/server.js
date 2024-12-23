@@ -52,7 +52,7 @@ app.use('/catupload', express.static('catupload'));
 app.use('/api/order', orderRouter);
 
 // nested category adding api
-app.use('/api/category', nestedCtgRouter)
+app.use('/api/category', nestedCtgRouter);
 
 // running server on the port
 app.listen(port, () => {
