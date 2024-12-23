@@ -12,7 +12,7 @@ const Add = ({ url }) => {
     oldPrice: "",
     newPrice: "",
     currency: "",
-    category: "Universal",
+    category: "",
     material: "",
     compatibility: "",
     reviews: "",
