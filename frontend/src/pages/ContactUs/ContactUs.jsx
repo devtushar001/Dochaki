@@ -63,9 +63,9 @@ const ContactUs = () => {
                 </p>
                 <div className="connecting-platforms">
                 <h4>Connect with us..</h4>
-                    <a href="https://www.facebook.com/dochaki/"><img src={assets.facebook_icon} alt="" /></a>
-                    <a href=""><img src={assets.instagram_icon} alt="" /></a>
-                    <a href="https://wa.me/91-880-679-5165"><img src={assets.whatsapp} alt="" /></a>
+                    <a href="https://www.facebook.com/dochaki/" target='_blank'><img src={assets.facebook_icon} alt="" /></a>
+                    <a href="https://www.instagram.com/dmototech/" target='_blank'><img src={assets.instagram_icon} alt="" /></a>
+                    <a href="https://wa.me/918806795165" target='_blank'><img src={assets.whatsapp} alt="" /></a>
                 </div>
                 <div className="other-connecting-details">
                     <h4>Other connecting details...</h4>

@@ -103,7 +103,7 @@ const Orders = ({ url }) => {
 
   // Fetch orders on component mount
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
     orderList();
   }, []);
 

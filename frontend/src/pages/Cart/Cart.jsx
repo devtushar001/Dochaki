@@ -9,7 +9,7 @@ const Cart = () => {
     const navigate = useNavigate();
 
     useEffect(()=>{
-        window.scrollTo(0, 0);
+        window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
     }, [])
     return (
         <>
