@@ -60,9 +60,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
     gap: 20px;
     flex-direction: column;
     padding: 20px;
+    transition: all ease-in 0.25s;
 }
 
 .shop-category-item img {
@@ -73,8 +75,8 @@
 }
 
 .shop-category-item.active {
-    background-color: rgb(0, 73, 119);
-    color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 90px;
+    color: #2a2a2a;
 }
 
 #bike-model {

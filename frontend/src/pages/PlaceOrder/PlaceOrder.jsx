@@ -65,7 +65,7 @@ const PlaceOrder = () => {
 
     const newOrderData = JSON.stringify(orderData, null, 2);
     try {
-      const response = await fetch("http://localhost:8000/api/order/place", {
+      const response = await fetch("http://localhost:8000/api/instamojo/place-order", {
         method: "POST", // Specify the HTTP method
         headers: {
           "Content-Type": "application/json", // Specify JSON content type

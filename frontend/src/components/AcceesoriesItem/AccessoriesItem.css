@@ -8,6 +8,7 @@
     transition: 0.3s;
     animation: fadeIn 1s;
     cursor: pointer;
+    border-radius: 8px 8px 8px 8px;
 }
 
 .accessory-item:hover {
@@ -16,7 +17,6 @@
 
 .accessory-item-image {
     width: 100%;
-    border-radius: 15px 15px 0px 0px;
 }
 
 .accesory-item-info {
@@ -53,7 +53,7 @@
 }
 
 .accessory-item-name-rating {
-    height: 20px;
+    height: 25px;
     overflow: hidden;
     margin-bottom: 12px;
 }

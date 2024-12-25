@@ -9,6 +9,7 @@ import cartRouter from './routes/cartRoute.js';
 import { categoryRouter } from './routes/categoryRoute.js';
 import orderRouter from './routes/orderRoute.js';
 import nestedCtgRouter from './routes/nestedCtgRoute/nestedCtgRoute.js';
+import instaMojoRouter from './routes/instamohoRoute.js';
 
 dotenv.config();
 
@@ -53,6 +54,9 @@ app.use('/api/order', orderRouter);
 
 // nested category adding api
 app.use('/api/category', nestedCtgRouter);
+
+// instamojoRouter setup
+app.use('/api/instamojo', instaMojoRouter);
 
 // running server on the port
 app.listen(port, () => {
