@@ -3,6 +3,7 @@ import './LoginPopup.css';
 import { fassets } from "../../frontend_assets/assets";
 import { DochakiContext } from "../Context/Contact";
 import { toast } from "react-toastify";
+import GoogleSignup from "./GoogleSignup";
 
 const LoginPopup = ({ setShowLogin }) => {
     const [currentState, setCurrentState] = useState("Sign Up");
@@ -85,6 +86,8 @@ const LoginPopup = ({ setShowLogin }) => {
                         required
                     />
                 </div>
+                {currentState === "Sign Up" ? <GoogleSignup/> : <div></div>}
+                
                 <button type="submit">
                     {currentState === "Sign Up" ? "Create Account" : "Login"}
                 </button>
@@ -98,6 +101,7 @@ const LoginPopup = ({ setShowLogin }) => {
                     <p>Create a new account? <span onClick={() => setCurrentState("Sign Up")}>Click here</span></p>
                 )}
             </form>
+            
         </div>
     );
 };

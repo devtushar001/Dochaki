@@ -14,10 +14,11 @@
 
 .login-popup-container {
     place-self: center;
-    width: max(23vw, 330px);
-    color: #e8e8e8;
+    width: max(23vw, 540px);
+    height: auto;
+    color: #ffffff;
     display: grid;
-    background-color: rgba(255, 255, 255, 0.273);
+    background-color: rgba(67, 152, 178, 0.273);
     backdrop-filter: blur(10px);
     flex-direction: column;
     gap: 25px;
@@ -48,6 +49,8 @@
 .login-popup-inputs input {
     outline: none;
     border: none;
+    height: 45px;
+    font-size: 18px;
     background: rgba(184, 184, 184, 0.25);
     border-bottom: 1px solid #3e3e3e;
     padding: 10px;
@@ -57,7 +60,7 @@
 .login-popup-container button{
     outline: none;
     border: none;
-    padding: 10px;
+    padding: 15px;
     background: rgb(0, 166, 255);
     font-size: 15px;
     color: #fff;
