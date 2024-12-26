@@ -1,12 +1,8 @@
 import express from 'express';
-import { placeOrder,verifyOrder,userOrder, listOrders,updateStatus  } from '../controllers/instamojoController.js';
-import isAuth from '../middlewares/auth.js';
+import { homeController, placeOrder } from '../controllers/instamojoController.js';
 const instaMojoRouter = express.Router();
 
-instaMojoRouter.post('/place-order', isAuth, placeOrder);
-instaMojoRouter.post('/verify-order', verifyOrder);
-instaMojoRouter.get('/user-orders', userOrder);
-instaMojoRouter.get('/list-orders', listOrders);
-instaMojoRouter.patch('/update-status', updateStatus);
+instaMojoRouter.get('/home',  homeController);
+instaMojoRouter.post('/place-order', placeOrder);
 
 export default instaMojoRouter;
