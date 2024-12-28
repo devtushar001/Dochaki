@@ -65,7 +65,7 @@ const PlaceOrder = () => {
 
     const newOrderData = JSON.stringify(orderData, null, 2);
     try {
-      const response = await fetch("http://localhost:8000/api/instamojo/place-order", {
+      const response = await fetch("http://localhost:8000/api/order/place", {
         method: "POST", // Specify the HTTP method
         headers: {
           "Content-Type": "application/json", // Specify JSON content type
@@ -79,6 +79,7 @@ const PlaceOrder = () => {
         toast.error("Something got error");
       }
       const { session_url } = result;
+      console.log(session_url);
       window.location.replace(session_url);
 
     } catch (error) {

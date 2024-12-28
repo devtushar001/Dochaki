@@ -3,6 +3,6 @@ import { homeController, placeOrder } from '../controllers/instamojoController.j
 const instaMojoRouter = express.Router();
 
 instaMojoRouter.get('/home',  homeController);
-instaMojoRouter.post('/place-order', placeOrder);
+// instaMojoRouter.post('/place-order', placeOrder);
 
 export default instaMojoRouter;
