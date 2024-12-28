@@ -9,7 +9,6 @@ import cartRouter from './routes/cartRoute.js';
 import { categoryRouter } from './routes/categoryRoute.js';
 import orderRouter from './routes/orderRoute.js';
 import nestedCtgRouter from './routes/nestedCtgRoute/nestedCtgRoute.js';
-import instaMojoRouter from './routes/instamohoRoute.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -52,8 +51,7 @@ app.use('/api/cart', cartRouter);
 app.use('/api/category', categoryRouter);
 app.use('/api/category/nested', nestedCtgRouter);
 app.use('/catupload', express.static('catupload'));
-app.use('/api/order', orderRouter);
-// app.use('/api/instamojo', instaMojoRouter);
+app.use('/api/instamojo', orderRouter);
 
 // Catch-All Route for Frontend
 app.get('*', (req, res) => {
