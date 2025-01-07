@@ -4,8 +4,9 @@ import Stripe from "stripe";
 
 const frontend_url = process.env.FRONTEND_URL;
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
-
+console.log(frontend_url)
 const placeOrder = async (req, res) => {
+  
     try {
         const userId = req.user?.id;
         if (!userId) return res.status(401).json({ success: false, message: "User not authenticated" });

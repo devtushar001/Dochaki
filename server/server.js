@@ -9,56 +9,56 @@ import cartRouter from './routes/cartRoute.js';
 import { categoryRouter } from './routes/categoryRoute.js';
 import orderRouter from './routes/orderRoute.js';
 import nestedCtgRouter from './routes/nestedCtgRoute/nestedCtgRoute.js';
-import instaMojoRouter from './routes/instamohoRoute.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 5000; // Use PORT from .env, fallback to 8000
+const port = process.env.PORT || 5000;
 const mongo_url = process.env.MONDODB_URL;
-app.use(express.json());
+console.log(mongo_url)
+
+// Middlewares
 app.use(cors());
-
-//
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.json())
+app.use(express.json());
 
+// MongoDB Connection
+connectDB(mongo_url).catch(err => {
+    console.error("Failed to connect to MongoDB:", err);
+    process.exit(1);
+});
+
+// Default route
 app.get('/', (req, res) => {
     res.status(201).send({
         success: true,
-        message: "Server connected successfully on port number : " + port
+        message: `Server connected successfully on port number: ${port}`
     });
 });
 
+// Serve static files
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+app.use(express.static(path.join(__dirname, '/client/dist')));
 
-// mongodb connection function running here!
-connectDB(mongo_url);
-
-// API endpoints
+// API Endpoints
 app.use("/api/accessory", accessoryRouter);
 app.use("/images", express.static('uploads'));
-
-// user router
 app.use("/api/user", userRouter);
-
-// cart router
 app.use('/api/cart', cartRouter);
-
-// category router
 app.use('/api/category', categoryRouter);
+app.use('/api/category/nested', nestedCtgRouter);
 app.use('/catupload', express.static('catupload'));
-// http://localhost:8000/catupload//menu_image-1733413564680-877237691.jpeg image format
+app.use('/api/instamojo', orderRouter);
 
-// order router setup
-app.use('/api/order', orderRouter);
+// Catch-All Route for Frontend
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '/client/dist/index.html'));
+});
 
-// nested category adding api
-app.use('/api/category', nestedCtgRouter);
-
-// instamojoRouter setup
-app.use('/api/instamojo', instaMojoRouter);
-
-// running server on the port
+// Start Server
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
