@@ -1,11 +1,12 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
   "type": "module",
   "scripts": {
+    "start": "node server.js",
     "server": "nodemon server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npm install --prefix ./client && npm run build --prefix ./client && npm install"
   },
   "author": "",
   "license": "ISC",
@@ -16,15 +17,20 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+<<<<<<< HEAD
     "helmet": "^8.0.0",
     "instamojo-nodejs": "^0.0.5",
+=======
+>>>>>>> 814b50a27ec836078124716d3dd4317b8cc031c9
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.8.3",
     "multer": "^1.4.5-lts.1",
     "node-fetch": "^3.3.2",
-    "nodemon": "^3.1.7",
     "stripe": "^17.4.0",
     "uuid": "^11.0.3",
     "validator": "^13.12.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
   }
 }
