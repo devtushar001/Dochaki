@@ -64,21 +64,12 @@ const PlaceOrder = () => {
     const orderData = {
       address: data,
       items: orderItems,
-<<<<<<< HEAD
       amount: getTotalCartAmount(), // Adjust multiplier as needed
-=======
-      amount: getTotalCartAmount() * 1.15,
->>>>>>> 814b50a27ec836078124716d3dd4317b8cc031c9
     };
 
     try {
-<<<<<<< HEAD
       const response = await fetch("http://localhost:8000/api/order/place", {
         method: "POST", // Specify the HTTP method
-=======
-      const response = await fetch(`${url}/api/instamojo/place-order`, {
-        method: "POST",
->>>>>>> 814b50a27ec836078124716d3dd4317b8cc031c9
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
