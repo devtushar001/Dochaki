@@ -63,6 +63,7 @@ const addMenuSub = async (req, res) => {
 };
 
 const categoryAll = async (req, res) => {
+    console.log("nested category controller functioning but...")
     try {
         const allCategories = await nestedCtgModel.find();
 

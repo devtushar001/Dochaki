@@ -60,12 +60,12 @@ const PlaceOrder = () => {
     const orderData = {
       address: data, // Validate 'data' before using
       items: orderItems,
-      amount: getTotalCartAmount() * 1.15, // Adjust multiplier as needed
+      amount: getTotalCartAmount(), // Adjust multiplier as needed
     };
 
     const newOrderData = JSON.stringify(orderData, null, 2);
     try {
-      const response = await fetch("http://localhost:8000/api/instamojo/place-order", {
+      const response = await fetch("http://localhost:8000/api/order/place", {
         method: "POST", // Specify the HTTP method
         headers: {
           "Content-Type": "application/json", // Specify JSON content type

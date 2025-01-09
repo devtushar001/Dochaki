@@ -28,14 +28,6 @@ const placeOrder = async (req, res) => {
                 },
                 quantity,
             })),
-            // {
-            //     price_data: {
-            //         currency: "inr",
-            //         product_data: { name: "Including shipping fee and GST" },
-            //         unit_amount: 0 * 100,
-            //     },
-            //     quantity: 1,
-            // },
         ];
 
         const session = await stripe.checkout.sessions.create({
@@ -64,7 +56,7 @@ const verifyOrder = async (req, res) => {
     console.log(req + " req")
     const { orderId, success } = req.body;
     try {
-        if (!(success == "true")) {
+        if (!(success === "true")) {
             await orderModel.findByIdAndDelete(orderId)
             return res.json({
                 success: false,

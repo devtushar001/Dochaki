@@ -36,14 +36,13 @@ const MyOrder = () => {
             setLoading(false);
         }
     };
-    
+
+
     useEffect(() => {
-        window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
-        if (token && url) {
+        if (url && token) {
             myOrders();
         }
-    }, [token, url]);
-
+    }, [token, url])
     return (
         <div className="my-orders">
             <h2>My Orders</h2>
@@ -71,7 +70,7 @@ const MyOrder = () => {
                                 <span>&#x25cf;</span>
                                 <b> {order.status}</b>
                             </p>
-                            <button onClick={myOrders}>Track Order</button>
+                            <button>Track Order</button>
                         </div>
                     ))}
                 </div>
