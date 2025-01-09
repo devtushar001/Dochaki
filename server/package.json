@@ -17,11 +17,8 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
-<<<<<<< HEAD
     "helmet": "^8.0.0",
     "instamojo-nodejs": "^0.0.5",
-=======
->>>>>>> 814b50a27ec836078124716d3dd4317b8cc031c9
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.8.3",
     "multer": "^1.4.5-lts.1",
