@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { fassets } from "../../../../frontend/src/frontend_assets/assets";
+import{fassets} from "../../../../server/client/src/frontend_assets/assets"
 import "./Orders.css";
 
 const Orders = ({ url }) => {

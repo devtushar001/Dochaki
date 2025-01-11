@@ -41,10 +41,10 @@ console.log(price)
                     </div>
                     <div className="accessory-view-right-prices">
                         <div className="accessory-view-right-price-old">
-                        &#8377;{price.oldPrice} <span>{price.currency}</span>
+                        &#8377;{price.oldPrice} 
                         </div>
                         <div className="accessory-view-right-price-new">
-                        &#8377;{price.newPrice} <span>{price.currency}</span>
+                        &#8377;{price.newPrice}
                         </div>
                     </div>
                     <div className="accessory-view-right-description">
