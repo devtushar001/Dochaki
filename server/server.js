@@ -12,7 +12,6 @@ import cartRouter from './routes/cartRoute.js';
 import { categoryRouter } from './routes/categoryRoute.js';
 import orderRouter from './routes/orderRoute.js';
 import nestedCtgRouter from './routes/nestedCtgRoute/nestedCtgRoute.js';
-import instaMojoRouter from './routes/instamohoRoute.js';
 
 dotenv.config();
 
@@ -40,7 +39,6 @@ app.use("/api/cart", cartRouter);
 app.use("/api/category", categoryRouter);
 app.use('/api/nested-category', nestedCtgRouter); // Avoid overlapping routes
 app.use('/api/order', orderRouter);
-app.use('/api/instamojo', instaMojoRouter);
 
 // Client app
 const __filename = fileURLToPath(import.meta.url);

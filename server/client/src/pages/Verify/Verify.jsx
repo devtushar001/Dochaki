@@ -14,7 +14,7 @@ const Verify = () => {
 
     const verifyOrder = async () => {
         try {
-            const response = await fetch(`${url}/api/order/verify`, {
+            const response = await fetch(`${url}/api/instamojo/verify`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json", // Correct header for JSON

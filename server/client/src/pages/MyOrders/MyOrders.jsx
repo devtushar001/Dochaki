@@ -12,7 +12,7 @@ const MyOrder = () => {
     const myOrders = async () => {
         setLoading(true);
         try {
-            const response = await fetch(`${url}/api/order/myorders`, {
+            const response = await fetch(`${url}/api/instamojo/myorders`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
