@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
 import './PlaceOrder.css';
 import { useContext } from "react";
 import { DochakiContext } from "../../components/Context/Contact";
@@ -21,13 +21,11 @@ const PlaceOrder = () => {
     phone: ""
   });
 
-  // Handle Input Changes
   const onChangeHandler = (event) => {
     const { name, value } = event.target;
-    setData((data) => ({ ...data, [name]: value }));
+    setData(data => ({ ...data, [name]: value }));
   };
 
-  // Validate Form Data
   const validateForm = () => {
     if (!data.firstName || !data.lastName || !data.email || !data.phone) {
       toast.error("Please fill all required fields.");
@@ -44,11 +42,9 @@ const PlaceOrder = () => {
     return true;
   };
 
-  // Place Order
   const placeOrder = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-
     const orderItems = bikeAccessories
       .filter((item) => cartItem[item._id])
       .map((item) => ({
@@ -62,45 +58,40 @@ const PlaceOrder = () => {
     }
 
     const orderData = {
-      address: data,
+      address: data, // Validate 'data' before using
       items: orderItems,
-      amount: getTotalCartAmount(), // Adjust multiplier as needed
+      amount: getTotalCartAmount() * 1.15, // Adjust multiplier as needed
     };
 
+    const newOrderData = JSON.stringify(orderData, null, 2);
     try {
-      const response = await fetch("http://localhost:8000/api/order/place", {
+      const response = await fetch("http://localhost:8000/api/instamojo/place-order", {
         method: "POST", // Specify the HTTP method
         headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json", // Specify JSON content type
+          Authorization: `Bearer ${token}`, // Add the Authorization header with the token
         },
-        body: JSON.stringify(orderData),
+        body: newOrderData, // Convert the orderData object to a JSON string
       });
-
       const result = await response.json();
-
-      if (!response.ok) {
-        toast.error(result.message || "Something went wrong with placing the order.");
-        return;
+      console.log(result)
+      if (!response.success) {
+        toast.error("Something got error");
       }
-
       const { session_url } = result;
-      console.log(session_url);
       window.location.replace(session_url);
 
     } catch (error) {
-      console.error(error);
-      toast.error(error.message || "An unexpected error occurred.");
+      toast.error(error)
     }
+
   };
 
-  // Scroll to Top and Check Cart State
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (!token || getTotalCartAmount() === 0) {
-      navigate("/cart");
-    }
-  }, [token, getTotalCartAmount, navigate]);
+    if (!token) navigate("/cart")
+    else if (getTotalCartAmount() === 0) navigate("/cart")
+  }, [token])
 
   return (
     <>
@@ -182,7 +173,6 @@ const PlaceOrder = () => {
             required
           />
         </div>
-
         <div className="place-order-right">
           <div className="cart-total">
             <h2>Cart Totals</h2>
@@ -193,12 +183,12 @@ const PlaceOrder = () => {
             <hr />
             <div className="cart-total-details">
               <p>Shipping Fee + GST</p>
-              <p>&#8377;{getTotalCartAmount() * 0.15}</p>
+              <p>&#8377;{0}</p>
             </div>
             <hr />
             <div className="cart-total-details">
-              <p>Total (Including GST & Shipping)</p>
-              <p>&#8377;{getTotalCartAmount() * 1.15}</p>
+              <p>Total</p>
+              <p>&#8377;{getTotalCartAmount()}</p>
             </div>
             <button type="submit">PROCEED TO PAYMENT</button>
           </div>
