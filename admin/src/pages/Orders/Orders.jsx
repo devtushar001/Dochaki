@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import{fassets} from "../../../../server/client/src/frontend_assets/assets"
+import { fassets } from "../../../../server/client/src/frontend_assets/assets";
 import "./Orders.css";
 
 const Orders = ({ url }) => {
@@ -11,7 +11,7 @@ const Orders = ({ url }) => {
   const orderList = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch(`${url}/api/order/list`, {
+      const response = await fetch(`${url}/api/nested-category/all-category`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

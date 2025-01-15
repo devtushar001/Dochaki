@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 
 const Add = ({ url }) => {
   const [categories, setCategories] = useState([]);
-  
+
   const [data, setData] = useState({
     name: "",
     description: "",
@@ -120,7 +120,7 @@ const Add = ({ url }) => {
     // Fetch categories
     const fetchCategories = async () => {
       try {
-        const response = await fetch(`${url}/api/category/all-category`);
+        const response = await fetch(`${url}/api/nested-category/all-category`);
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }

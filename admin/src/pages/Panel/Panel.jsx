@@ -25,7 +25,7 @@ const CreateCategory = ({ url }) => {
 
         try {
             setLoading(true);
-            const response = await fetch(`${url}/api/category/add-menu`, {
+            const response = await fetch(`${url}/api/nested-category/add-menu`, {
                 method: 'POST',
                 body: formData,
             });
@@ -62,7 +62,7 @@ const CreateCategory = ({ url }) => {
     const fetchCategories = async () => {
         try {
             setLoading(true);
-            const response = await fetch(`${url}/api/category/all-category`);
+            const response = await fetch(`${url}/api/nested-category/all-category`);
             const data = await response.json();
 
             if (!response.ok || !data.success) {
@@ -82,7 +82,7 @@ const CreateCategory = ({ url }) => {
     const deleteCategory = async (id) => {
         try {
             setLoading(true);
-            const response = await fetch(`${url}/api/category/delete-parent`, {
+            const response = await fetch(`${url}/api/nested-category/delete-parent`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -114,7 +114,7 @@ const CreateCategory = ({ url }) => {
 
         try {
             setLoading(true);
-            const response = await fetch(`${url}/api/category/add-menu-sub`, {
+            const response = await fetch(`${url}/api/nested-category/add-menu-sub`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -144,7 +144,7 @@ const CreateCategory = ({ url }) => {
     const deleteSubCategory = async (parentId, subId) => {
         try {
             setLoading(true);
-            const response = await fetch(`${url}/api/category/delete-sub-category`, {
+            const response = await fetch(`${url}/api/nested-category/delete-sub-category`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
