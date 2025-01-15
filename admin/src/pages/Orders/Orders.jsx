@@ -11,7 +11,7 @@ const Orders = ({ url }) => {
   const orderList = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch(`${url}/api/nested-category/all-category`, {
+      const response = await fetch(`${url}/api/order/list`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
