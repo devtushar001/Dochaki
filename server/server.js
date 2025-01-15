@@ -32,6 +32,7 @@ app.use("/api/accessory", accessoryRouter);
 app.use("/images", express.static('uploads'));
 app.use("/api/user", userRouter);
 app.use("/api/cart", cartRouter);
+app.use("api/order", orderRouter);
 app.use("/api/category", categoryRouter);
 app.use("/api/nested-category", nestedCtgRouter); // Adjusted route to avoid conflicts
 app.use("/catupload", express.static('catupload'));

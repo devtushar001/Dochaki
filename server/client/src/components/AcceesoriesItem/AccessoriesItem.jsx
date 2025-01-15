@@ -37,7 +37,6 @@ const AccessoriesItem = (props) => {
               <p className="accessory-item-new-price">&#8377;{price.oldPrice} </p>
               <p className="accessory-item-old-price">&#8377;{price.newPrice}</p>
             </div>
-
           </div>
 
           <p className="accessory-item-category" id="ctgs" ><span >Fit In : </span><p id="ctg-sub-ctg"> {category} {!subcategory? "" : <img src={fassets.arrow_icon}  alt="" />}{subcategory}</p></p>

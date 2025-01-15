@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
 import { DochakiContext } from "../Context/Contact";
 import { toast } from "react-toastify";
-import "./ShopCategories.css";
+import './ShopCategories.css';
 
 const ShopCategories = ({ category, setCategory, activeSubCtg, setActiveSubCtg }) => {
     const { url } = useContext(DochakiContext);
@@ -13,7 +13,7 @@ const ShopCategories = ({ category, setCategory, activeSubCtg, setActiveSubCtg }
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const response = await fetch(`http://localhost:8000/api/nested-category/all-category`);
+                const response = await fetch(`${url}/api/category/get`);
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
@@ -22,31 +22,30 @@ const ShopCategories = ({ category, setCategory, activeSubCtg, setActiveSubCtg }
                     toast.error(data.message);
                     return;
                 }
-                setCategories(data.allCategories || []);
+                setCategories(data.categories);
                 toast.success(data.message);
             } catch (err) {
                 toast.error(err.message || "Failed to fetch categories");
             }
         };
-console.log(categories);
+
         fetchCategories();
         window.scrollTo(0, 0);
-    }, []);
-
-    const handleCategoryClick = (item) => {
-        setCategory((prev) => (prev === item.menu_name ? "All" : item.menu_name));
-        setActiveCtg(item);
-        setActiveSubCtg(null); // Reset sub-category on category change
-    };
+    }, [url]);
 
     const handleSubCategoryChange = (e) => {
         setActiveSubCtg(e.target.value);
     };
 
+    // Slider Control
     const scrollSlider = (direction) => {
         if (sliderRef.current) {
             const scrollAmount = 200; // Number of pixels to scroll
-            sliderRef.current.scrollLeft += direction === "left" ? -scrollAmount : scrollAmount;
+            if (direction === "left") {
+                sliderRef.current.scrollLeft -= scrollAmount;
+            } else {
+                sliderRef.current.scrollLeft += scrollAmount;
+            }
         }
     };
 
@@ -55,10 +54,7 @@ console.log(categories);
             {/* Category Selection */}
             <h2 id="title-ctg">Choose bike brand</h2>
             <div className="slider-container">
-                <button
-                    className="slider-btn left-btn"
-                    onClick={() => scrollSlider("left")}
-                >
+                <button className="slider-btn left-btn" onClick={() => scrollSlider("left")}>
                     &lt;
                 </button>
                 <div className="shop-categories" ref={sliderRef}>
@@ -66,21 +62,21 @@ console.log(categories);
                         <div
                             key={i}
                             className={`shop-category-item ${category === item.menu_name ? "active" : ""}`}
-                            onClick={() => handleCategoryClick(item)}
+                            onClick={() => {
+                                setCategory(prev => (prev === item.menu_name ? "All" : item.menu_name));
+                                setActiveCtg(item);
+                                setActiveSubCtg(null); // Reset sub-category on category change
+                            }}
                         >
-                            {/* Uncomment and add valid image path */}
                             <img
                                 src={`${url}/${item.menu_image}`}
-                                alt={`Category: ${item.menu_name}`}
+                                alt={item.menu_name}
                             />
                             <p>{item.menu_name}</p>
                         </div>
                     ))}
                 </div>
-                <button
-                    className="slider-btn right-btn"
-                    onClick={() => scrollSlider("right")}
-                >
+                <button className="slider-btn right-btn" onClick={() => scrollSlider("right")}>
                     &gt;
                 </button>
             </div>

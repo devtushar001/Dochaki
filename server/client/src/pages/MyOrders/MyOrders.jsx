@@ -12,7 +12,7 @@ const MyOrder = () => {
     const myOrders = async () => {
         setLoading(true);
         try {
-            const response = await fetch(`${url}/api/instamojo/myorders`, {
+            const response = await fetch(`${url}/api/order/myorders`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -36,13 +36,14 @@ const MyOrder = () => {
             setLoading(false);
         }
     };
-
-
+    
     useEffect(() => {
-        if (url && token) {
+        window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+        if (token && url) {
             myOrders();
         }
-    }, [token, url])
+    }, [token, url]);
+
     return (
         <div className="my-orders">
             <h2>My Orders</h2>
@@ -70,7 +71,7 @@ const MyOrder = () => {
                                 <span>&#x25cf;</span>
                                 <b> {order.status}</b>
                             </p>
-                            <button>Track Order</button>
+                            <button onClick={myOrders}>Track Order</button>
                         </div>
                     ))}
                 </div>
