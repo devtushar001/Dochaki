@@ -2,3 +2,15 @@ node_modules
 .env
 ./.env
 /.env
+
+// env file
+PORT = 8000
+MONGODB_URL = mongodb+srv://tmr908776:tmr908776@cluster0.uuscm.mongodb.net/Dochaki
+JWT_SECRET = random_value
+STRIPE_SECRET_KEY = sk_test_51QTddDSB39MvXAU9HIVSamrHqt04a5zp8NwK8oJBVD2On3Hldrt97tio3LX8GiHJypVnXT7PK6sVPFNuJ2M0sWZV00qqwrnMPo
+FRONTEND_URL = "http://localhost:8000"
+
+API_KEY = "4f5004e78b0a1ea0f3c82d467fb2626e"
+AUTH_KEY = "771693a33c28aac7a0ffc79ac7a2a87a"
+INSTA_API_URL = "https://www.instamojo.com/"
+REDIRECT_URL = "http://localhost:8000/success"
